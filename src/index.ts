@@ -1,5 +1,6 @@
 import express, { Express, Request, Response } from 'express';
 import { initRhino, processInputData } from '../controllers/RhinoCompute';
+import { ProcessInputDataParams } from '../controllers/types';
 //import more required functions from ./controllers/ *
 //and set up respective routes
 
@@ -21,5 +22,11 @@ app.get('/rhino', (req: Request, res: Response) => {
   initRhino();
   res.send('Initialised rhino');
 });
+
+app.post('/processInputData', async (req: Request, res: Response) => {
+  const inputData: ProcessInputDataParams = req.body; // get input data from request body
+  const result = await processInputData(inputData); // process the data
+  res.json(result); // send the result back to the client as JSON
+})
 
 app.use(express.static('public'));

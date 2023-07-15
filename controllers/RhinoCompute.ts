@@ -41,7 +41,6 @@ export const initRhino = async (): Promise<Uint8Array> => {
   const buffer = await readFileAsync(filepath);
 
   const arr = new Uint8Array(buffer);
-  console.log("init rhino loaded", arr)
   return arr;
 }
 // New helper function
