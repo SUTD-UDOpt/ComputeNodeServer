@@ -4,7 +4,7 @@ import { Res, DataColItem } from "./types";
 
 export const processDataFromCompute = (res: Res): {
     dataCol: { [key: number]: DataColItem; };
-    averageValues: { [key: string]: number }
+    averageValues: { [key: string]: number };
 } => {
     // Initialize variables
     let dataCol: { [key: number]: DataColItem } = {};
@@ -45,16 +45,16 @@ export const processDataFromCompute = (res: Res): {
 
     return { dataCol, averageValues };
 }
-// TODO Anna: add in create polygon function 
-export const addParcelsToParcelLayer = (dataCol: { [key: number]: DataColItem }) => {
-    const parsedGraphics: __esri.Collection<__esri.Graphic> | __esri.Graphic[] = []
+// // TODO Anna: add in create polygon function 
+// export const addParcelsToParcelLayer = (dataCol: { [key: number]: DataColItem }) => {
+//     const parsedGraphics: __esri.Collection<__esri.Graphic> | __esri.Graphic[] = []
 
-    // add graphics here with the attributes
-    // for (let i = 0; i < dataCol.length; i++) {
+//     // add graphics here with the attributes
+//     // for (let i = 0; i < dataCol.length; i++) {
 
-    // probably need to import the parcel layer here from MobX store
-    // ParcelOptimizerStoreInstance.parcelLayer.source.addMany(parsedGraphics)
-}
+//     // probably need to import the parcel layer here from MobX store
+//     // ParcelOptimizerStoreInstance.parcelLayer.source.addMany(parsedGraphics)
+// }
 // DATA RELATED FUNCTIONS
 function truncate(num: number) {
     return Math.round(num * 1000) / 1000
