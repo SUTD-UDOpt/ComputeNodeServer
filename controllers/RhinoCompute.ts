@@ -1,23 +1,29 @@
 // import { ParcelOptimizerStore, ParcelOptimizerStoreInstance } from "../ParcelOptimizerStore";
-
+const rhinoUrl =
+  "https://cdn.jsdelivr.net/npm/rhino3dm@0.15.0-beta/rhino3dm.module.js";
+const computeUrl = "http://18.143.175.3:80/";
+const COMPUTE_API_KEY = "0hOfevzxs49OfbXDqyUx";
 // import rhino3dm from "rhino3dm";
 // import { ToasterStoreInstance } from "Toaster";
 // import { FormData, ProcessInputDataParams } from "../types";
 import RhinoCompute, * as compute from "compute-rhino3d";
 import { processDataFromCompute } from "./processBackend";
 import { ProcessInputDataParams } from "./types";
+import fs from 'fs';
+import path from 'path';
+import util from 'util';
 
-const definitionName = "./gh/Parcellation.gh";
-const rhinoUrl =
-  "https://cdn.jsdelivr.net/npm/rhino3dm@0.15.0-beta/rhino3dm.module.js";
-const computeUrl = "http://18.143.175.3:80/";
-const COMPUTE_API_KEY = "0hOfevzxs49OfbXDqyUx";
+const definitionName = "../public/Parcellation.gh";
+
 
 interface Result {
   isSuccess: boolean;
   data?: any;
   error?: string;
 }
+
+// This constructs a promisified version of fs.readFile
+const readFileAsync = util.promisify(fs.readFile);
 
 export const initRhino = async (): Promise<Uint8Array> => {
   // assuming Rhino3dm and RhinoCompute are their default export from their respective modules
@@ -29,9 +35,13 @@ export const initRhino = async (): Promise<Uint8Array> => {
 
   // load a grasshopper file!
   const url = definitionName;
-  const res = await fetch(url);
-  const buffer = await res.arrayBuffer();
+  // const res = await fetch(url);
+  // const buffer = await res.arrayBuffer();
+  const filepath = path.join(__dirname, definitionName); // modified to use fs
+  const buffer = await readFileAsync(filepath);
+
   const arr = new Uint8Array(buffer);
+  console.log("init rhino loaded", arr)
   return arr;
 }
 // New helper function

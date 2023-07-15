@@ -21,3 +21,5 @@ app.get('/rhino', (req: Request, res: Response) => {
   initRhino();
   res.send('Initialised rhino');
 });
+
+app.use(express.static('public'));
