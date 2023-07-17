@@ -1,12 +1,23 @@
 import express, { Express, Request, Response } from 'express';
 import { initRhino, processInputData } from '../controllers/RhinoCompute';
 import { ProcessInputDataParams } from '../controllers/types';
+import cors from 'cors';
 //import more required functions from ./controllers/ *
 //and set up respective routes
 
 const app: Express = express();
 const port = 1989;
 
+app.use(cors()); // This will allow all CORS requests
+
+// If you want to limit CORS to only your frontend application, you can do it like this:
+
+// app.use(cors({
+//   origin: 'http://localhost:3000' 
+// }));
+app.use(express.json({ limit: '50mb' })); // This is the built-in express middleware to parse JSON bodies
+app.use(express.urlencoded({ limit: '50mb', extended: true })); // This is the built-in express middleware to parse URL-encoded bodies (e.g. for forms)
+// needed to increase limit to allow this
 
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
