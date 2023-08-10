@@ -1,11 +1,9 @@
 // import { ParcelOptimizerStore, ParcelOptimizerStoreInstance } from "../ParcelOptimizerStore";
 const rhinoUrl =
   "https://cdn.jsdelivr.net/npm/rhino3dm@0.15.0-beta/rhino3dm.module.js";
-const computeUrl = "http://18.143.175.3:80/";
+const computeUrl = "http://18.141.240.61:80/";
 const COMPUTE_API_KEY = "0hOfevzxs49OfbXDqyUx";
-// import rhino3dm from "rhino3dm";
-// import { ToasterStoreInstance } from "Toaster";
-// import { FormData, ProcessInputDataParams } from "../types";
+
 import RhinoCompute, * as compute from "compute-rhino3d";
 import { processDataFromCompute } from "./processBackend";
 import { ProcessInputDataParams } from "./types";
@@ -15,15 +13,11 @@ import util from 'util';
 
 const definitionName = "../public/Parcellation.gh";
 
-
 interface Result {
   isSuccess: boolean;
   data?: any;
   error?: string;
 }
-
-// This constructs a promisified version of fs.readFile
-const readFileAsync = util.promisify(fs.readFile);
 
 export const initRhino = async (): Promise<Uint8Array> => {
   // assuming Rhino3dm and RhinoCompute are their default export from their respective modules
@@ -35,20 +29,20 @@ export const initRhino = async (): Promise<Uint8Array> => {
 
   // load a grasshopper file!
   const url = definitionName;
-  // const res = await fetch(url);
-  // const buffer = await res.arrayBuffer();
-  const filepath = path.join(__dirname, definitionName); // modified to use fs
-  const buffer = await readFileAsync(filepath);
-
+  const res = await fetch(url);
+  const buffer = await res.arrayBuffer();
   const arr = new Uint8Array(buffer);
   return arr;
 }
 // New helper function
 const evaluateDefinition = async (definition: Uint8Array, trees: any): Promise<Result> => {
   try {
-    const response = await RhinoCompute.Grasshopper.evaluateDefinition(definition, trees);
+    const response = await RhinoCompute.Grasshopper.evaluateDefinition(definition, trees); //the error might be coming from server!
+    console.log("This is response in evaluateDefinition in API --> ", response) // didnt get executed coz error above
     return { isSuccess: true, data: response }
+
   } catch (error: any) {
+    console.log("ERROR AAASDASDSA")
     return { isSuccess: false, error: error.message };
   }
 }
@@ -56,7 +50,11 @@ const evaluateDefinition = async (definition: Uint8Array, trees: any): Promise<R
 export const processInputData = async (
   formData: ProcessInputDataParams
 ): Promise<Result> => {
-  console.log("data to be sent to rhino: ", formData);
+
+  console.log("Received formData (formDataWithGeometry) in RhinoCompute.ts in API")
+  const logFile = fs.createWriteStream('logformData.txt', { flags: 'w' });
+  logFile.write(util.inspect(formData, { showHidden: false, depth: null }));
+
 
   // Check if inputs exist, if not return error
   if (!formData.selectedArea || !formData.selectedPoint1 || !formData.selectedPoint2) {
@@ -108,12 +106,18 @@ export const processInputData = async (
   trees.push(param8);
   trees.push(param9);
 
-  const response = await evaluateDefinition(formData.definition, trees);
+ 
+  const u8aDefinition = new Uint8Array(Object.values(formData.definition));
+  const response = await evaluateDefinition(u8aDefinition, trees);
+  // console.log(u8aDefinition)
+  // console.log("This is the response after evaluateDefinition: ---> ", response)
   if (!response.isSuccess) {
-    return response;
+    return response;   
   }
 
   const processedData = processDataFromCompute(response.data);
+  if (Object.keys(processedData.dataCol).length === 0){
+    return { isSuccess: false, data: "" }
+  }
   return { isSuccess: true, data: processedData };
-
-}
+};

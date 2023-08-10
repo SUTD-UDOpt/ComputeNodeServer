@@ -8,7 +8,9 @@ import cors from 'cors';
 const app: Express = express();
 const port = 1989;
 
-app.use(cors()); // This will allow all CORS requests
+// This will allow all CORS requests
+app.use(cors()); 
+app.options('*', cors());
 
 // If you want to limit CORS to only your frontend application, you can do it like this:
 
@@ -35,9 +37,16 @@ app.get('/rhino', (req: Request, res: Response) => {
 });
 
 app.post('/processInputData', async (req: Request, res: Response) => {
-  const inputData: ProcessInputDataParams = req.body; // get input data from request body
-  const result = await processInputData(inputData); // process the data
-  res.json(result); // send the result back to the client as JSON
+  const formDataWithGeometry: ProcessInputDataParams = req.body; // get input data from request body
+  try{
+    const result = await processInputData(formDataWithGeometry); // process the data
+    console.log("Done sending data to processInputData in API index.ts")
+    console.log("This is received result in index.ts: ", result)
+    // res.json(result); // send the result back to the client as JSON
+    // console.log("This is result sending to userUtil --->", res)
+  }catch(e){
+    console.error(e)
+  }
 })
 
 app.use(express.static('public'));
