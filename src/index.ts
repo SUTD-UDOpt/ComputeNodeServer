@@ -2,11 +2,13 @@ import express, { Express, Request, Response } from 'express';
 import { initRhino, processInputData } from '../controllers/RhinoCompute';
 import { ProcessInputDataParams } from '../controllers/types';
 import cors from 'cors';
+import path from 'path'
+
 //import more required functions from ./controllers/ *
 //and set up respective routes
-
 const app: Express = express();
 const port = 1989;
+
 
 // This will allow all CORS requests
 app.use(cors()); 
@@ -38,6 +40,7 @@ app.get('/rhino', (req: Request, res: Response) => {
 
 app.post('/processInputData', async (req: Request, res: Response) => {
   const formDataWithGeometry: ProcessInputDataParams = req.body; // get input data from request body
+  console.log("Type of formDataWithGeometry at API: ", typeof(formDataWithGeometry))
   try{
     const result = await processInputData(formDataWithGeometry); // process the data
     console.log("Done sending data to processInputData in API index.ts")
@@ -48,5 +51,22 @@ app.post('/processInputData', async (req: Request, res: Response) => {
     console.error(e)
   }
 })
+
+app.get('/Parcellation', (req: Request, res: Response) =>{
+  let ghFilePath = path.resolve(__dirname, '../public/Parcellation.gh');
+
+  const options = {
+    headers: {
+      'x-timestamp': Date.now(),
+      'x-sent': true
+    }
+  }
+  res.sendFile(ghFilePath, options ,(error) =>{
+    if (error !== undefined){
+      console.error(error);
+      res.status(500).send('An error occured while trying to send the gh file')
+    }
+  })
+});
 
 app.use(express.static('public'));

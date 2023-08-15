@@ -10,6 +10,7 @@ import { ProcessInputDataParams } from "./types";
 import fs from 'fs';
 import path from 'path';
 import util from 'util';
+import { response } from "express";
 
 const definitionName = "../public/Parcellation.gh";
 
@@ -34,11 +35,19 @@ export const initRhino = async (): Promise<Uint8Array> => {
   const arr = new Uint8Array(buffer);
   return arr;
 }
+
+//http for the Parcellation.sh file to pass in evaluateDefinition
+const fullURL = 'http://localhost:1989/Parcellation'
+
+
 // New helper function
-const evaluateDefinition = async (definition: Uint8Array, trees: any): Promise<Result> => {
+const evaluateDefinition = async (definitionPath: any, trees: any): Promise<Result> => {
   try {
-    const response = await RhinoCompute.Grasshopper.evaluateDefinition(definition, trees); //the error might be coming from server!
-    console.log("This is response in evaluateDefinition in API --> ", response) // didnt get executed coz error above
+    
+    const response = await RhinoCompute.Grasshopper.evaluateDefinition(definitionPath, trees, false);
+    // console.log("This is response in evaluateDefinition in API --> ", response) 
+    console.log("Definition: ", definitionPath)
+    console.log("Tree: ", trees)
     return { isSuccess: true, data: response }
 
   } catch (error: any) {
@@ -46,6 +55,8 @@ const evaluateDefinition = async (definition: Uint8Array, trees: any): Promise<R
     return { isSuccess: false, error: error.message };
   }
 }
+
+
 
 export const processInputData = async (
   formData: ProcessInputDataParams
@@ -107,13 +118,15 @@ export const processInputData = async (
   trees.push(param9);
 
  
-  const u8aDefinition = new Uint8Array(Object.values(formData.definition));
-  const response = await evaluateDefinition(u8aDefinition, trees);
+  // const u8aDefinition = new Uint8Array(Object.values(formData.definition));
+  const response = await evaluateDefinition(fullURL, trees);
   // console.log(u8aDefinition)
   // console.log("This is the response after evaluateDefinition: ---> ", response)
   if (!response.isSuccess) {
     return response;   
   }
+
+  console.log("This is response.data --> ", response.data)
 
   const processedData = processDataFromCompute(response.data);
   if (Object.keys(processedData.dataCol).length === 0){
