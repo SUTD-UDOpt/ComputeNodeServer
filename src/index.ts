@@ -23,7 +23,7 @@ app.use(express.json({ limit: '50mb' })); // This is the built-in express middle
 app.use(express.urlencoded({ limit: '50mb', extended: true })); // This is the built-in express middleware to parse URL-encoded bodies (e.g. for forms)
 // needed to increase limit to allow this
 
-app.listen(port, () => {
+app.listen(port, '0.0.0.0',() => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
 });
 
