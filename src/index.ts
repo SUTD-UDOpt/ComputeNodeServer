@@ -52,7 +52,7 @@ app.post('/processInputData', async (req: Request, res: Response) => {
     const result = await processInputData(formDataWithGeometry); // process the data
     console.log("Done sending data to processInputData in API index.ts")
     console.log("This is received result in index.ts: ", result)
-    // res.json(result); // send the result back to the client as JSON
+    res.json(result); // send the result back to the client as JSON
     // console.log("This is result sending to userUtil --->", res)
   } catch (e) {
     console.error(e)
