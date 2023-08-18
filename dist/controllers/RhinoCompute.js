@@ -48,7 +48,6 @@ const env = process.env;
 const rhinoUrl = "https://cdn.jsdelivr.net/npm/rhino3dm@0.15.0-beta/rhino3dm.module.js";
 const computeUrl = process.env.COMPUTE_URL;
 const COMPUTE_API_KEY = process.env.COMPUTE_API_KEY;
-const definitionName = process.env.GH_FILE;
 //http for the Parcellation.sh file to pass in evaluateDefinition
 const fullURL = `http://${process.env.INSTANCE_IP}:1989/Parcellation`;
 // New helper function
@@ -73,19 +72,14 @@ const processInputData = (formData) => __awaiter(void 0, void 0, void 0, functio
     if (!formData.selectedArea || !formData.selectedPoint1 || !formData.selectedPoint2) {
         return { isSuccess: false, error: 'Ensure the polygon and access points are selected' };
     }
-    const pRoadPercentage = formData.pRoad / 100;
-    const sRoadPercentage = formData.sRoad / 100;
-    const roadPercentage = [
-        pRoadPercentage,
-        sRoadPercentage,
-        1 - pRoadPercentage - sRoadPercentage,
-    ];
     // mock inputs
     let mockRoadInput = [];
     let vertices = formData.selectedArea.rings.toString().split(",");
     for (let i = 0; i < vertices.length - 1; i++) {
         mockRoadInput.push(3);
     }
+    // weights compile
+    let weights = [formData.weightContinuity, formData.weightSideNumber, formData.weightAngleVar, formData.weightLengthVar, formData.weightAccess, formData.weightEvenArea, formData.weightOrientation];
     const param1 = new compute_rhino3d_1.default.Grasshopper.DataTree("Coords");
     param1.append([0], [formData.selectedArea.rings.toString()]);
     const param2 = new compute_rhino3d_1.default.Grasshopper.DataTree("PointAX");
@@ -101,9 +95,13 @@ const processInputData = (formData) => __awaiter(void 0, void 0, void 0, functio
     const param7 = new compute_rhino3d_1.default.Grasshopper.DataTree("Orientation");
     param7.append([0], [formData.orientation]);
     const param8 = new compute_rhino3d_1.default.Grasshopper.DataTree("Roads");
-    param8.append([0], roadPercentage);
+    param8.append([0], [formData.pRoad / 100]);
     const param9 = new compute_rhino3d_1.default.Grasshopper.DataTree("EdgeCat");
     param9.append([0], [mockRoadInput.toString()]);
+    const param10 = new compute_rhino3d_1.default.Grasshopper.DataTree("Weights");
+    param10.append([0], [weights.toString()]);
+    const param11 = new compute_rhino3d_1.default.Grasshopper.DataTree("LengthVSAngle");
+    param11.append([0], [formData.lengthVSAngle]);
     const trees = [];
     trees.push(param1);
     trees.push(param2);
@@ -114,6 +112,8 @@ const processInputData = (formData) => __awaiter(void 0, void 0, void 0, functio
     trees.push(param7);
     trees.push(param8);
     trees.push(param9);
+    trees.push(param10);
+    trees.push(param11);
     // const u8aDefinition = new Uint8Array(Object.values(formData.definition));
     const response = yield evaluateDefinition(fullURL, trees);
     // console.log(u8aDefinition)

@@ -15,9 +15,7 @@ const env = process.env as EnvironmentVariables;
 const rhinoUrl =
   "https://cdn.jsdelivr.net/npm/rhino3dm@0.15.0-beta/rhino3dm.module.js";
 const computeUrl = process.env.COMPUTE_URL;
-const COMPUTE_API_KEY = process.env.COMPUTE_API_KEY;
-
-const definitionName = process.env.GH_FILE;
+const COMPUTE_API_KEY = process.env.COMPUTE_API_KEY
 
 interface Result {
   isSuccess: boolean;
@@ -61,20 +59,15 @@ export const processInputData = async (
     return { isSuccess: false, error: 'Ensure the polygon and access points are selected' };
   }
 
-  const pRoadPercentage = formData.pRoad / 100;
-  const sRoadPercentage = formData.sRoad / 100;
-  const roadPercentage = [
-    pRoadPercentage,
-    sRoadPercentage,
-    1 - pRoadPercentage - sRoadPercentage,
-  ];
-
   // mock inputs
   let mockRoadInput = []
   let vertices = formData.selectedArea!.rings.toString().split(",")
   for (let i = 0; i < vertices.length - 1; i++) {
     mockRoadInput.push(3)
   }
+
+  // weights compile
+  let weights = [formData.weightContinuity, formData.weightSideNumber, formData.weightAngleVar, formData.weightLengthVar, formData.weightAccess, formData.weightEvenArea, formData.weightOrientation]
 
   const param1 = new RhinoCompute.Grasshopper.DataTree("Coords");
   param1.append([0], [formData.selectedArea!.rings.toString()]);
@@ -91,9 +84,13 @@ export const processInputData = async (
   const param7 = new RhinoCompute.Grasshopper.DataTree("Orientation");
   param7.append([0], [formData.orientation]);
   const param8 = new RhinoCompute.Grasshopper.DataTree("Roads");
-  param8.append([0], roadPercentage);
+  param8.append([0], [formData.pRoad / 100]);
   const param9 = new RhinoCompute.Grasshopper.DataTree("EdgeCat");
   param9.append([0], [mockRoadInput.toString()]);
+  const param10 = new RhinoCompute.Grasshopper.DataTree("Weights");
+  param10.append([0], [weights.toString()]);
+  const param11 = new RhinoCompute.Grasshopper.DataTree("LengthVSAngle");
+  param11.append([0], [formData.lengthVSAngle]);
 
   const trees: Array<any>[] = [];
   trees.push(param1);
@@ -105,6 +102,8 @@ export const processInputData = async (
   trees.push(param7);
   trees.push(param8);
   trees.push(param9);
+  trees.push(param10);
+  trees.push(param11);
 
 
   // const u8aDefinition = new Uint8Array(Object.values(formData.definition));

@@ -3,16 +3,22 @@
 export interface FormData {
     minArea: number;
     orientation: number;
-    pRoad: number;
-    sRoad: number;
-    weights: number[];
+    pRoad: number,
+    lengthVSAngle: number,
+    weightContinuity: number,
+    weightSideNumber: number,
+    weightAngleVar: number,
+    weightLengthVar: number,
+    weightAccess: number,
+    weightEvenArea: number,
+    weightOrientation: number
 }
 
 export interface ProcessInputDataParams extends FormData {
     selectedArea: __esri.Polygon; // replace this with the correct selectedArea type
     selectedPoint1: __esri.Point; // replace this with the correct selectedPoint1 type
     selectedPoint2: __esri.Point; // replace this with the correct selectedPoint2 type
-    definition: Uint8Array; // if this is needed also
+    // definition: Uint8Array; // if this is needed also
 }
 
 interface InnerTreeChild {
@@ -61,4 +67,4 @@ export type EnvironmentVariables = {
     COMPUTE_URL: string;
     PORT: string;
     INSTANCE_IP: string;
-  };
+};

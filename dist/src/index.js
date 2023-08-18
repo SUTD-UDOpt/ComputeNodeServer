@@ -48,6 +48,7 @@ const env = process.env;
 const app = (0, express_1.default)();
 const port = parseInt(env.PORT, 10) || 1989;
 const IP = process.env.INSTANCE_IP;
+const ghFileName = process.env.GH_FILE || '../../public/ParcellationSmooth.gh';
 // This will allow all CORS requests
 app.use((0, cors_1.default)());
 app.options('*', (0, cors_1.default)());
@@ -84,7 +85,7 @@ app.post('/processInputData', (req, res) => __awaiter(void 0, void 0, void 0, fu
     }
 }));
 app.get('/Parcellation', (req, res) => {
-    let ghFilePath = path_1.default.resolve(__dirname, '../../public/Parcellation.gh');
+    let ghFilePath = path_1.default.resolve(__dirname, ghFileName);
     // let ghFilePath = '../public/Parcellation.gh';
     const options = {
         headers: {
