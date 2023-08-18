@@ -54,3 +54,11 @@ export interface DataColItem {
     compactness: number;
     convexity: number;
 }
+
+export type EnvironmentVariables = {
+    GH_FILE: string;
+    COMPUTE_API_KEY: string;
+    COMPUTE_URL: string;
+    PORT: string;
+    INSTANCE_IP: string;
+  };

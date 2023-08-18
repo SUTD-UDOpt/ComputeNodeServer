@@ -1,18 +1,23 @@
 // import { ParcelOptimizerStore, ParcelOptimizerStoreInstance } from "../ParcelOptimizerStore";
-const rhinoUrl =
-  "https://cdn.jsdelivr.net/npm/rhino3dm@0.15.0-beta/rhino3dm.module.js";
-const computeUrl = "http://18.141.240.61:80/";
-const COMPUTE_API_KEY = "0hOfevzxs49OfbXDqyUx";
-
+import * as dotenv from 'dotenv';
 import RhinoCompute, * as compute from "compute-rhino3d";
 import { processDataFromCompute } from "./processBackend";
-import { ProcessInputDataParams } from "./types";
+import { ProcessInputDataParams, EnvironmentVariables } from "./types";
 import fs from 'fs';
 import path from 'path';
 import util from 'util';
 import { response } from "express";
 
-const definitionName = "../public/Parcellation.gh";
+//use dotenv
+dotenv.config();
+const env = process.env as EnvironmentVariables;
+
+const rhinoUrl =
+  "https://cdn.jsdelivr.net/npm/rhino3dm@0.15.0-beta/rhino3dm.module.js";
+const computeUrl = process.env.COMPUTE_URL;
+const COMPUTE_API_KEY = process.env.COMPUTE_API_KEY;
+
+const definitionName = process.env.GH_FILE;
 
 interface Result {
   isSuccess: boolean;
@@ -20,21 +25,21 @@ interface Result {
   error?: string;
 }
 
-export const initRhino = async (): Promise<Uint8Array> => {
-  // assuming Rhino3dm and RhinoCompute are their default export from their respective modules
-  const compute = RhinoCompute;
+// export const initRhino = async (): Promise<Uint8Array> => {
+//   // assuming Rhino3dm and RhinoCompute are their default export from their respective modules
+//   const compute = RhinoCompute;
 
-  // set RhinoCompute server URL and API key
-  compute.url = computeUrl;
-  compute.apiKey = COMPUTE_API_KEY;
+//   // set RhinoCompute server URL and API key
+//   compute.url = computeUrl;
+//   compute.apiKey = COMPUTE_API_KEY;
 
-  // load a grasshopper file!
-  const url = definitionName;
-  const res = await fetch(url);
-  const buffer = await res.arrayBuffer();
-  const arr = new Uint8Array(buffer);
-  return arr;
-}
+//   // load a grasshopper file!
+//   const url = definitionName;
+//   const res = await fetch(url);
+//   const buffer = await res.arrayBuffer();
+//   const arr = new Uint8Array(buffer);
+//   return arr;
+// }
 
 //http for the Parcellation.sh file to pass in evaluateDefinition
 const fullURL = 'http://localhost:1989/Parcellation'

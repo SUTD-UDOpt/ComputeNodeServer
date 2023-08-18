@@ -1,13 +1,19 @@
 import express, { Express, Request, Response } from 'express';
-import { initRhino, processInputData } from '../controllers/RhinoCompute';
-import { ProcessInputDataParams } from '../controllers/types';
+import { processInputData } from '../controllers/RhinoCompute';
+import { ProcessInputDataParams, EnvironmentVariables } from '../controllers/types';
 import cors from 'cors';
-import path from 'path'
+import path from 'path';
+import * as dotenv from 'dotenv';
+
+//use dotenv
+dotenv.config();
+const env = process.env as EnvironmentVariables;
 
 //import more required functions from ./controllers/ *
 //and set up respective routes
 const app: Express = express();
-const port = 1989;
+const port = parseInt(env.PORT, 10) || 1989;
+const IP = process.env.INSTANCE_IP;
 
 
 // This will allow all CORS requests
@@ -15,7 +21,6 @@ app.use(cors());
 app.options('*', cors());
 
 // If you want to limit CORS to only your frontend application, you can do it like this:
-
 // app.use(cors({
 //   origin: 'http://localhost:3000' 
 // }));
@@ -23,8 +28,9 @@ app.use(express.json({ limit: '50mb' })); // This is the built-in express middle
 app.use(express.urlencoded({ limit: '50mb', extended: true })); // This is the built-in express middleware to parse URL-encoded bodies (e.g. for forms)
 // needed to increase limit to allow this
 
+
 app.listen(port, '0.0.0.0',() => {
-  console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
+  console.log(`⚡️[server]: Server is running at http://localhost:${port} and http://${IP}:${port}`);
 });
 
 
@@ -33,10 +39,10 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 //try to run the initRhino from RhinoCompute.ts
-app.get('/rhino', (req: Request, res: Response) => {
-  initRhino();
-  res.send('Initialised rhino');
-});
+// app.get('/rhino', (req: Request, res: Response) => {
+//   // initRhino();
+//   res.send('Initialised rhino');
+// });
 
 app.post('/processInputData', async (req: Request, res: Response) => {
   const formDataWithGeometry: ProcessInputDataParams = req.body; // get input data from request body
