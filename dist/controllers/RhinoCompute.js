@@ -1,4 +1,27 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -12,32 +35,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.processInputData = exports.initRhino = void 0;
+exports.processInputData = void 0;
 // import { ParcelOptimizerStore, ParcelOptimizerStoreInstance } from "../ParcelOptimizerStore";
-const rhinoUrl = "https://cdn.jsdelivr.net/npm/rhino3dm@0.15.0-beta/rhino3dm.module.js";
-const computeUrl = "http://18.141.240.61:80/";
-const COMPUTE_API_KEY = "0hOfevzxs49OfbXDqyUx";
+const dotenv = __importStar(require("dotenv"));
 const compute_rhino3d_1 = __importDefault(require("compute-rhino3d"));
 const processBackend_1 = require("./processBackend");
 const fs_1 = __importDefault(require("fs"));
 const util_1 = __importDefault(require("util"));
-const definitionName = "../public/Parcellation.gh";
-const initRhino = () => __awaiter(void 0, void 0, void 0, function* () {
-    // assuming Rhino3dm and RhinoCompute are their default export from their respective modules
-    const compute = compute_rhino3d_1.default;
-    // set RhinoCompute server URL and API key
-    compute.url = computeUrl;
-    compute.apiKey = COMPUTE_API_KEY;
-    // load a grasshopper file!
-    const url = definitionName;
-    const res = yield fetch(url);
-    const buffer = yield res.arrayBuffer();
-    const arr = new Uint8Array(buffer);
-    return arr;
-});
-exports.initRhino = initRhino;
+//use dotenv
+dotenv.config();
+const env = process.env;
+const rhinoUrl = "https://cdn.jsdelivr.net/npm/rhino3dm@0.15.0-beta/rhino3dm.module.js";
+const computeUrl = process.env.COMPUTE_URL;
+const COMPUTE_API_KEY = process.env.COMPUTE_API_KEY;
+const definitionName = process.env.GH_FILE;
 //http for the Parcellation.sh file to pass in evaluateDefinition
-const fullURL = 'http://localhost:1989/Parcellation';
+const fullURL = `http://${process.env.INSTANCE_IP}:1989/Parcellation`;
 // New helper function
 const evaluateDefinition = (definitionPath, trees) => __awaiter(void 0, void 0, void 0, function* () {
     try {

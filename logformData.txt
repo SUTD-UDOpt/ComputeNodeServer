@@ -2,33 +2,35 @@
   minArea: 10000,
   orientation: 0,
   pRoad: 10,
-  sRoad: 20,
-  weightEvenArea: 0.8,
-  weightElongation: 0.5,
-  weightCompactness: 0.5,
-  weightConvexity: 0.5,
-  weightOrientation: 0.8,
+  lengthVSAngle: 0.6,
+  weightContinuity: 0.5,
+  weightSideNumber: 8.8,
+  weightAngleVar: 5.3,
+  weightLengthVar: 10,
+  weightAccess: 0,
+  weightEvenArea: 4.3,
+  weightOrientation: 0,
   selectedArea: {
     spatialReference: { latestWkid: 3857, wkid: 102100 },
     rings: [
       [
-        [ 11560511.612378469, 142540.4964999922 ],
-        [ 11560586.30937824, 142495.0234459551 ],
-        [ 11560478.22759269, 142325.0156793682 ],
-        [ 11560400.158342056, 142371.51867630018 ],
-        [ 11560511.612378469, 142540.4964999922 ]
+        [ 11559632.196600743, 142660.76928264537 ],
+        [ 11559751.56466837, 142825.22957799028 ],
+        [ 11559976.46038048, 142699.33894194808 ],
+        [ 11559875.924762344, 142579.5615148079 ],
+        [ 11559727.076176053, 142495.2717796941 ],
+        [ 11559632.196600743, 142660.76928264537 ]
       ]
     ]
   },
   selectedPoint1: {
     spatialReference: { latestWkid: 3857, wkid: 102100 },
-    x: 11560467.537880402,
-    y: 142488.27991565567
+    x: 11559677.8046781,
+    y: 142745.1541679654
   },
   selectedPoint2: {
     spatialReference: { latestWkid: 3857, wkid: 102100 },
-    x: 11560551.307470713,
-    y: 142434.32934062916
-  },
-  definition: ''
+    x: 11559927.679218829,
+    y: 142606.15901181017
+  }
 }

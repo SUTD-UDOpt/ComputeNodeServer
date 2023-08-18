@@ -25,30 +25,14 @@ interface Result {
   error?: string;
 }
 
-// export const initRhino = async (): Promise<Uint8Array> => {
-//   // assuming Rhino3dm and RhinoCompute are their default export from their respective modules
-//   const compute = RhinoCompute;
-
-//   // set RhinoCompute server URL and API key
-//   compute.url = computeUrl;
-//   compute.apiKey = COMPUTE_API_KEY;
-
-//   // load a grasshopper file!
-//   const url = definitionName;
-//   const res = await fetch(url);
-//   const buffer = await res.arrayBuffer();
-//   const arr = new Uint8Array(buffer);
-//   return arr;
-// }
-
 //http for the Parcellation.sh file to pass in evaluateDefinition
-const fullURL = 'http://localhost:1989/Parcellation'
+const fullURL = `http://${process.env.INSTANCE_IP}:1989/Parcellation`
 
 
 // New helper function
 const evaluateDefinition = async (definitionPath: any, trees: any): Promise<Result> => {
   try {
-    
+
     const response = await RhinoCompute.Grasshopper.evaluateDefinition(definitionPath, trees, false);
     // console.log("This is response in evaluateDefinition in API --> ", response) 
     console.log("Definition: ", definitionPath)
@@ -122,19 +106,19 @@ export const processInputData = async (
   trees.push(param8);
   trees.push(param9);
 
- 
+
   // const u8aDefinition = new Uint8Array(Object.values(formData.definition));
   const response = await evaluateDefinition(fullURL, trees);
   // console.log(u8aDefinition)
   // console.log("This is the response after evaluateDefinition: ---> ", response)
   if (!response.isSuccess) {
-    return response;   
+    return response;
   }
 
   console.log("This is response.data --> ", response.data)
 
   const processedData = processDataFromCompute(response.data);
-  if (Object.keys(processedData.dataCol).length === 0){
+  if (Object.keys(processedData.dataCol).length === 0) {
     return { isSuccess: false, data: "" }
   }
   return { isSuccess: true, data: processedData };
