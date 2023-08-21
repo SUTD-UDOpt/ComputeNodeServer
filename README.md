@@ -4,11 +4,12 @@
 ### Get the project running (for both debugging and production)
 **1.** Clone from [the repo](https://github.com/SUTD-UDOpt/ComputeNodeServer )  <br/>
 **2.** Run `npm install`   <br/>
-**3.** In the source code of the compute.rhino3d package *(node_modules/compute-rhino3d/compute.rhino3d.js)* , enter the rhinocompute credentials \ 
-![module](img/compute.rhino3d.png)   <br/>
+**3.** In the source code of the compute.rhino3d package *(node_modules/compute-rhino3d/compute.rhino3d.js)* , enter the rhinocompute credentials. 
+<img src="img/compute.rhino3d.png" alt="module" style="display: block; margin: left;" />   <br/>
 
-**4.** From the frontend *(src/Tools/ParcelOptimizer/utils/userFlowUtils.ts)* make sure it is calling to the correct IP to the API. \
-![userUtil](img/userUtil.png)   <br/>
+**4.** From the frontend *(src/Tools/ParcelOptimizer/utils/userFlowUtils.ts)* make sure it is calling to the correct IP to the API.  
+<img src="img/userUtil.png" alt="module" style="display: block; margin: left;" />   <br/>
+
 
 <br/>
 
@@ -25,5 +26,8 @@ cd into the ComputeNodeServer directory, run the script file with `./start.sh`. 
 
 **5. b.** If the instance is already running in production \
 After making any changes to the code (git pull etc) run this script file `./refresh.sh`   <br/>
+
+**6.** To check if the app is running, do  `pm2 list`. 
+<img src="img/pm2.png" alt="module" style="display: block; margin: left;" />   <br/>
 
    
