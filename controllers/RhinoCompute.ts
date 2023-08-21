@@ -119,6 +119,7 @@ export const processInputData = async (
 
 
   const jsond = await response.data.json();
+  console.log("Passing this to processBackend: ", jsond)
 
 
   const processedData = processDataFromCompute(jsond);

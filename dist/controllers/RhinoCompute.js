@@ -120,9 +120,9 @@ const processInputData = (formData) => __awaiter(void 0, void 0, void 0, functio
     if (!response.isSuccess) {
         return response;
     }
-    const jsondd = yield response.data.json();
-    console.log("jsondd: ", jsondd);
-    const processedData = (0, processBackend_1.processDataFromCompute)(jsondd);
+    const jsond = yield response.data.json();
+    console.log("Passing this to processBackend: ", jsond);
+    const processedData = (0, processBackend_1.processDataFromCompute)(jsond);
     if (Object.keys(processedData.dataCol).length === 0) {
         return { isSuccess: false, data: "" };
     }
