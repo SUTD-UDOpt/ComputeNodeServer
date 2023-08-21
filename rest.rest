@@ -1,8 +1,0 @@
-POST http://localhost:1989/processInputData
-Content-Type: application/json
-
-{
-    "tesing": "test"
-}
-
-###
