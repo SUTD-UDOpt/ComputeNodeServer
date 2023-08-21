@@ -7,6 +7,8 @@ import fs from 'fs';
 import path from 'path';
 import util from 'util';
 import { response } from "express";
+import { Readable } from 'stream';
+
 
 //use dotenv
 dotenv.config();
@@ -108,17 +110,21 @@ export const processInputData = async (
 
   // const u8aDefinition = new Uint8Array(Object.values(formData.definition));
   const response = await evaluateDefinition(fullURL, trees);
-  // console.log(u8aDefinition)
-  // console.log("This is the response after evaluateDefinition: ---> ", response)
+  console.log("This is response.data --> ", response.data)
+
+
   if (!response.isSuccess) {
     return response;
   }
 
-  console.log("This is response.data --> ", response.data)
 
-  const processedData = processDataFromCompute(response.data);
+  const jsond = await response.data.json();
+
+
+  const processedData = processDataFromCompute(jsond);
   if (Object.keys(processedData.dataCol).length === 0) {
     return { isSuccess: false, data: "" }
   }
   return { isSuccess: true, data: processedData };
 };
+

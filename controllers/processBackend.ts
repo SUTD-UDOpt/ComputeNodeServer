@@ -14,17 +14,20 @@ export const processDataFromCompute = (res: Res): {
     const assignAverageValues = (res: any, keys: string[]) => {
         const averages: { [key: string]: number } = {};
         keys.forEach((key, index) => {
-            averages[key] = truncate(JSON.parse(res.values[2].InnerTree['{2}'][index].data));
+            averages[key] = truncate(JSON.parse(res.values[3].InnerTree['{2}'][index].data));
         });
         return averages;
     }
 
-    if (!res.values[2]?.InnerTree?.length) {
+    console.log("This is res.value in processBackend: ", res.values)
+    console.log("This is res.value[3] in processBackend: ", res.values[3])
+
+    if (!res.values[3]?.InnerTree?.length) {
         console.error("No data returned from backend");
         return { dataCol, averageValues };
     }
 
-    const data = JSON.parse(JSON.parse(res.values[2].InnerTree['{0}'][0].data))
+    const data = JSON.parse(JSON.parse(res.values[3].InnerTree['{0}'][0].data))
     Object.keys(data).forEach((key, i) => {
         dataCol[i] = {
             "id": i,

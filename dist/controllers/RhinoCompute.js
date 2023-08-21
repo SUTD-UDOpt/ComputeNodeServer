@@ -116,13 +116,13 @@ const processInputData = (formData) => __awaiter(void 0, void 0, void 0, functio
     trees.push(param11);
     // const u8aDefinition = new Uint8Array(Object.values(formData.definition));
     const response = yield evaluateDefinition(fullURL, trees);
-    // console.log(u8aDefinition)
-    // console.log("This is the response after evaluateDefinition: ---> ", response)
+    console.log("This is response.data --> ", response.data);
     if (!response.isSuccess) {
         return response;
     }
-    console.log("This is response.data --> ", response.data);
-    const processedData = (0, processBackend_1.processDataFromCompute)(response.data);
+    const jsondd = yield response.data.json();
+    console.log("jsondd: ", jsondd);
+    const processedData = (0, processBackend_1.processDataFromCompute)(jsondd);
     if (Object.keys(processedData.dataCol).length === 0) {
         return { isSuccess: false, data: "" };
     }
