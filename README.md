@@ -25,7 +25,7 @@
 cd into the ComputeNodeServer directory, run the script file with `./start.sh`. Follow the instruction prompted in the terminal if any.   <br/>
 
 **5. b.** If the instance is already running in production \
-After making any changes to the code (git pull etc) run this script file `./refresh.sh`   <br/>
+After making any changes to the code (git pull etc) run this script file `./reload.sh`   <br/>
 
 **6.** To check if the app is running, do  `pm2 list`. 
 <img src="img/pm2.png" alt="module" style="display: block; margin: left;" />   <br/>
