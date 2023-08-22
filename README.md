@@ -10,6 +10,9 @@
 **4.** From the frontend *(src/Tools/ParcelOptimizer/utils/userFlowUtils.ts)* make sure it is calling to the correct IP to the API.  
 <img src="img/userUtil.png" alt="module" style="display: block; margin: left;" />   <br/>
 
+**5.** Check and update the .env, make sure it is correct.   <br/>
+<img src="img/env.png" alt="module" style="display: block; margin: left;" />   <br/>
+
 
 <br/>
 

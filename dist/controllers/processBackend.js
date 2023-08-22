@@ -14,10 +14,10 @@ const processDataFromCompute = (res) => {
         });
         return averages;
     };
-    console.log("This is res.value in processBackend parsed to JSON ", res.values);
-    console.log("This is res.values[2].InnerTree[0] in processBackend: ", res.values[2].InnerTree['{0}']);
-    console.log("This is res.values[2].InnerTree[1] in processBackend: ", res.values[2].InnerTree['{1}']);
-    console.log("This is res.values[2].InnerTree[2] in processBackend: ", res.values[2].InnerTree['{2}']);
+    // console.log("This is res.value in processBackend parsed to JSON ", res.values)
+    // console.log("This is res.values[2].InnerTree[0] in processBackend: ", res.values[2].InnerTree['{0}'])
+    // console.log("This is res.values[2].InnerTree[1] in processBackend: ", res.values[2].InnerTree['{1}'])
+    // console.log("This is res.values[2].InnerTree[2] in processBackend: ", res.values[2].InnerTree['{2}'])
     // if (!res.values[2]?.InnerTree?.length) {
     //     console.error("No data returned from backend");
     //     return { dataCol, averageValues };
@@ -26,7 +26,7 @@ const processDataFromCompute = (res) => {
         console.error("No data returned from backend");
         return { dataCol, averageValues };
     }
-    console.log("This is JSON,parse -->: ", JSON.parse(res.values[2].InnerTree['{0}'][0].data));
+    // console.log("This is JSON,parse -->: ", JSON.parse(res.values[2].InnerTree['{0}'][0].data))
     const data = JSON.parse(JSON.parse(res.values[2].InnerTree['{0}'][0].data));
     Object.keys(data).forEach((key, i) => {
         dataCol[i] = {

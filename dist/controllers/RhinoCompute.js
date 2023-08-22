@@ -122,6 +122,7 @@ const processInputData = (formData) => __awaiter(void 0, void 0, void 0, functio
     }
     const jsond = yield response.data.json();
     console.log("Passing this to processBackend: ", jsond);
+    console.log("This is the json passing to processDataFromCompute: ", jsond);
     const processedData = (0, processBackend_1.processDataFromCompute)(jsond);
     if (Object.keys(processedData.dataCol).length === 0) {
         return { isSuccess: false, data: "" };
