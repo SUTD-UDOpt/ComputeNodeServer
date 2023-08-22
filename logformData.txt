@@ -1,0 +1,35 @@
+{
+  minArea: 10000,
+  orientation: 0,
+  pRoad: 10,
+  lengthVSAngle: 0.6,
+  weightContinuity: 0.5,
+  weightSideNumber: 8.8,
+  weightAngleVar: 5.3,
+  weightLengthVar: 10,
+  weightAccess: 0,
+  weightEvenArea: 4.3,
+  weightOrientation: 0,
+  selectedArea: {
+    spatialReference: { latestWkid: 3857, wkid: 102100 },
+    rings: [
+      [
+        [ 11560511.67435201, 142541.13723776117 ],
+        [ 11560585.698513478, 142493.95969501082 ],
+        [ 11560482.609739298, 142327.95054969267 ],
+        [ 11560400.1499436, 142375.36754820426 ],
+        [ 11560511.67435201, 142541.13723776117 ]
+      ]
+    ]
+  },
+  selectedPoint1: {
+    spatialReference: { latestWkid: 3857, wkid: 102100 },
+    x: 11560469.342660448,
+    y: 142488.0668002229
+  },
+  selectedPoint2: {
+    spatialReference: { latestWkid: 3857, wkid: 102100 },
+    x: 11560553.061166793,
+    y: 142428.8887107864
+  }
+}

@@ -31,3 +31,7 @@ After making any changes to the code (git pull etc) run this script file `./relo
 <img src="img/pm2.png" alt="module" style="display: block; margin: left;" />   <br/>
 
    
+
+
+### Health check
+- Do `pm2 list` to see if it is running, if not, do `pm2 start dist/src/ --name ePlannerAPI`
