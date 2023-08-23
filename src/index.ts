@@ -36,26 +36,21 @@ app.listen(port, '0.0.0.0', () => {
 
 
 app.get('/', (req: Request, res: Response) => {
-  res.send('This is the express + typescript server running');
+  res.send('This is the API for ePlanner');
 });
 
-//try to run the initRhino from RhinoCompute.ts
-// app.get('/rhino', (req: Request, res: Response) => {
-//   // initRhino();
-//   res.send('Initialised rhino');
-// });
 
 app.post('/processInputData', async (req: Request, res: Response) => {
   const formDataWithGeometry: ProcessInputDataParams = req.body; // get input data from request body
-  console.log("Type of formDataWithGeometry at API: ", typeof (formDataWithGeometry))
+  console.log("This is formDataWithGeometry at API: ", formDataWithGeometry)
   try {
     const result = await processInputData(formDataWithGeometry); // process the data
     console.log("Done sending data to processInputData in API index.ts")
     console.log("This is received result in index.ts: ", result)
     res.json(result); // send the result back to the client as JSON
-    // console.log("This is result sending to userUtil --->", res)
   } catch (e) {
     console.error(e)
+    res.status(500).send('Unable to send formDataWithGeometry to processInputData, check input data structure')
   }
 })
 

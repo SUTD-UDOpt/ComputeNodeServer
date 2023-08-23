@@ -40,7 +40,7 @@ const evaluateDefinition = async (definitionPath: any, trees: any): Promise<Resu
     return { isSuccess: true, data: response }
 
   } catch (error: any) {
-    console.log("ERROR AAASDASDSA")
+    console.log("Error from evaluateDefinition in RhinoCompute.ts")
     return { isSuccess: false, error: error.message };
   }
 }
@@ -70,6 +70,7 @@ export const processInputData = async (
 
   // weights compile
   let weights = [formData.weightContinuity, formData.weightSideNumber, formData.weightAngleVar, formData.weightLengthVar, formData.weightAccess, formData.weightEvenArea, formData.weightOrientation]
+  console.log("This is weights in RhinoCompute.ts: ", weights)
 
   const param1 = new RhinoCompute.Grasshopper.DataTree("Coords");
   param1.append([0], [formData.selectedArea!.rings.toString()]);
@@ -108,7 +109,6 @@ export const processInputData = async (
   trees.push(param11);
 
 
-  // const u8aDefinition = new Uint8Array(Object.values(formData.definition));
   const response = await evaluateDefinition(fullURL, trees);
   console.log("This is response.data --> ", response.data)
 
@@ -118,10 +118,18 @@ export const processInputData = async (
   }
 
 
-  const jsond = await response.data.json();
-  console.log("Passing this to processBackend: ", jsond)
+  // const jsond = await response.data.json();
+  var jsond;
+  try {
+    jsond = await response.data.json();
+  } catch (error: any) {
+    console.error("Unable to get JSON response data from evaluateDefinition in RhinoCompute.ts")
+  }
 
-  console.log("This is the json passing to processDataFromCompute: ", jsond)
+  console.log("This is the json passing to processBackend: ", jsond)
+  console.log("This is the jsond.values[0].InnerTree['{0}']", jsond.values[0].InnerTree['{0}'])
+  console.log("This is the jsond.values[1].InnerTree['{1}']", jsond.values[1].InnerTree['{1}'])
+  console.log("This is the jsond.values[2].InnerTree['{2}']s", jsond.values[2].InnerTree['{2}'])
 
   const processedData = processDataFromCompute(jsond);
   if (Object.keys(processedData.dataCol).length === 0) {

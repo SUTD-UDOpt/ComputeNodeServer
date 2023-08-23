@@ -17,11 +17,7 @@ const processDataFromCompute = (res) => {
     // console.log("This is res.value in processBackend parsed to JSON ", res.values)
     // console.log("This is res.values[2].InnerTree[0] in processBackend: ", res.values[2].InnerTree['{0}'])
     // console.log("This is res.values[2].InnerTree[1] in processBackend: ", res.values[2].InnerTree['{1}'])
-    // console.log("This is res.values[2].InnerTree[2] in processBackend: ", res.values[2].InnerTree['{2}'])
-    // if (!res.values[2]?.InnerTree?.length) {
-    //     console.error("No data returned from backend");
-    //     return { dataCol, averageValues };
-    // }
+    console.log("This is res.values[2].InnerTree[2] in processBackend: ", res.values[2].InnerTree['{2}']);
     if (!res.values[2]) {
         console.error("No data returned from backend");
         return { dataCol, averageValues };

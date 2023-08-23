@@ -60,7 +60,7 @@ const evaluateDefinition = (definitionPath, trees) => __awaiter(void 0, void 0, 
         return { isSuccess: true, data: response };
     }
     catch (error) {
-        console.log("ERROR AAASDASDSA");
+        console.log("Error from evaluateDefinition in RhinoCompute.ts");
         return { isSuccess: false, error: error.message };
     }
 });
@@ -80,6 +80,7 @@ const processInputData = (formData) => __awaiter(void 0, void 0, void 0, functio
     }
     // weights compile
     let weights = [formData.weightContinuity, formData.weightSideNumber, formData.weightAngleVar, formData.weightLengthVar, formData.weightAccess, formData.weightEvenArea, formData.weightOrientation];
+    console.log("This is weights in RhinoCompute.ts: ", weights);
     const param1 = new compute_rhino3d_1.default.Grasshopper.DataTree("Coords");
     param1.append([0], [formData.selectedArea.rings.toString()]);
     const param2 = new compute_rhino3d_1.default.Grasshopper.DataTree("PointAX");
@@ -114,15 +115,23 @@ const processInputData = (formData) => __awaiter(void 0, void 0, void 0, functio
     trees.push(param9);
     trees.push(param10);
     trees.push(param11);
-    // const u8aDefinition = new Uint8Array(Object.values(formData.definition));
     const response = yield evaluateDefinition(fullURL, trees);
     console.log("This is response.data --> ", response.data);
     if (!response.isSuccess) {
         return response;
     }
-    const jsond = yield response.data.json();
-    console.log("Passing this to processBackend: ", jsond);
-    console.log("This is the json passing to processDataFromCompute: ", jsond);
+    // const jsond = await response.data.json();
+    var jsond;
+    try {
+        jsond = yield response.data.json();
+    }
+    catch (error) {
+        console.log("Unable to get JSON response data from evaluateDefinition in RhinoCompute.ts");
+    }
+    console.log("This is the json passing to processBackend: ", jsond);
+    console.log("This is the jsond.values[0].InnerTree['{0}']", jsond.values[0].InnerTree['{0}']);
+    console.log("This is the jsond.values[1].InnerTree['{1}']", jsond.values[1].InnerTree['{1}']);
+    console.log("This is the jsond.values[2].InnerTree['{2}']s", jsond.values[2].InnerTree['{2}']);
     const processedData = (0, processBackend_1.processDataFromCompute)(jsond);
     if (Object.keys(processedData.dataCol).length === 0) {
         return { isSuccess: false, data: "" };
