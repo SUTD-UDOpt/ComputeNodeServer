@@ -126,7 +126,8 @@ const processInputData = (formData) => __awaiter(void 0, void 0, void 0, functio
         jsond = yield response.data.json();
     }
     catch (error) {
-        console.log("Unable to get JSON response data from evaluateDefinition in RhinoCompute.ts");
+        // console.error("Unable to get JSON response data from evaluateDefinition in RhinoCompute.ts")
+        return { isSuccess: false, error: "Unable to get JSON response data from evaluateDefinition in RhinoCompute.ts" };
     }
     console.log("This is the json passing to processBackend: ", jsond);
     console.log("This is the jsond.values[0].InnerTree['{0}']", jsond.values[0].InnerTree['{0}']);
@@ -134,7 +135,7 @@ const processInputData = (formData) => __awaiter(void 0, void 0, void 0, functio
     console.log("This is the jsond.values[2].InnerTree['{2}']s", jsond.values[2].InnerTree['{2}']);
     const processedData = (0, processBackend_1.processDataFromCompute)(jsond);
     if (Object.keys(processedData.dataCol).length === 0) {
-        return { isSuccess: false, data: "" };
+        return { isSuccess: false, error: "No data returned from processDataFromCompute" };
     }
     return { isSuccess: true, data: processedData };
 });

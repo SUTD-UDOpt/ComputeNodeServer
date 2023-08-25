@@ -123,7 +123,8 @@ export const processInputData = async (
   try {
     jsond = await response.data.json();
   } catch (error: any) {
-    console.error("Unable to get JSON response data from evaluateDefinition in RhinoCompute.ts")
+    // console.error("Unable to get JSON response data from evaluateDefinition in RhinoCompute.ts")
+    return { isSuccess: false, error: "Unable to get JSON response data from evaluateDefinition in RhinoCompute.ts" }
   }
 
   console.log("This is the json passing to processBackend: ", jsond)
@@ -133,7 +134,7 @@ export const processInputData = async (
 
   const processedData = processDataFromCompute(jsond);
   if (Object.keys(processedData.dataCol).length === 0) {
-    return { isSuccess: false, data: "" }
+    return { isSuccess: false, error: "No data returned from processDataFromCompute" }
   }
   return { isSuccess: true, data: processedData };
 };
