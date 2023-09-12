@@ -102,6 +102,8 @@ export const processInputData = async (
   param14.append([0], [weights.toString()]);
   const param15 = new RhinoCompute.Grasshopper.DataTree("LengthVSAngle");
   param15.append([0], [formData.lengthVSAngle]);
+  const param16 = new RhinoCompute.Grasshopper.DataTree("EdgeCat");
+  param16.append([0], [formData.roadCat]);
 
   const trees: Array<any>[] = [];
   trees.push(param1);
@@ -119,7 +121,7 @@ export const processInputData = async (
   trees.push(param13);
   trees.push(param14);
   trees.push(param15);
-
+  trees.push(param16);
 
   const response = await evaluateDefinition(fullURL, trees);
   console.log("This is response.data --> ", response.data)

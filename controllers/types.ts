@@ -22,6 +22,7 @@ export interface ProcessInputDataParams extends FormData {
     selectedArea: __esri.Polygon; // replace this with the correct selectedArea type
     selectedPoint1: __esri.Point; // replace this with the correct selectedPoint1 type
     selectedPoint2: __esri.Point; // replace this with the correct selectedPoint2 type
+    roadCat: string; // a series of road category
     // definition: Uint8Array; // if this is needed also
 }
 
