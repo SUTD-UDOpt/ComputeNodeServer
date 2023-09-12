@@ -86,14 +86,22 @@ export const processInputData = async (
   param6.append([0], [formData.minArea]);
   const param7 = new RhinoCompute.Grasshopper.DataTree("Orientation");
   param7.append([0], [formData.orientation]);
-  const param8 = new RhinoCompute.Grasshopper.DataTree("Roads");
-  param8.append([0], [formData.pRoad / 100]);
-  const param9 = new RhinoCompute.Grasshopper.DataTree("EdgeCat");
-  param9.append([0], [mockRoadInput.toString()]);
-  const param10 = new RhinoCompute.Grasshopper.DataTree("Weights");
-  param10.append([0], [weights.toString()]);
-  const param11 = new RhinoCompute.Grasshopper.DataTree("LengthVSAngle");
-  param11.append([0], [formData.lengthVSAngle]);
+  const param8 = new RhinoCompute.Grasshopper.DataTree("MinElongation");
+  param8.append([0], [formData.minElongation]);
+  const param9 = new RhinoCompute.Grasshopper.DataTree("Roads");
+  param9.append([0], [formData.pRoad / 100]);
+  const param10 = new RhinoCompute.Grasshopper.DataTree("Streamline");
+  param10.append([0], [formData.streamLine]);
+  const param11 = new RhinoCompute.Grasshopper.DataTree("FirstRoad");
+  param11.append([0], [formData.firstRoad]);
+  const param12 = new RhinoCompute.Grasshopper.DataTree("SimplifyChoice");
+  param12.append([0], [formData.simplifyChoice]);
+  const param13 = new RhinoCompute.Grasshopper.DataTree("EdgeCat");
+  param13.append([0], [mockRoadInput.toString()]);
+  const param14 = new RhinoCompute.Grasshopper.DataTree("Weights");
+  param14.append([0], [weights.toString()]);
+  const param15 = new RhinoCompute.Grasshopper.DataTree("LengthVSAngle");
+  param15.append([0], [formData.lengthVSAngle]);
 
   const trees: Array<any>[] = [];
   trees.push(param1);
@@ -107,6 +115,10 @@ export const processInputData = async (
   trees.push(param9);
   trees.push(param10);
   trees.push(param11);
+  trees.push(param12);
+  trees.push(param13);
+  trees.push(param14);
+  trees.push(param15);
 
 
   const response = await evaluateDefinition(fullURL, trees);

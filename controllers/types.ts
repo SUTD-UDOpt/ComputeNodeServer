@@ -3,7 +3,11 @@
 export interface FormData {
     minArea: number;
     orientation: number;
+    minElongation: number,
     pRoad: number,
+    streamLine: boolean,
+    firstRoad: boolean,
+    simplifyChoice: number,
     lengthVSAngle: number,
     weightContinuity: number,
     weightSideNumber: number,
