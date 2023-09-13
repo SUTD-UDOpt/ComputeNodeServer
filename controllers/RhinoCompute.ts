@@ -91,9 +91,9 @@ export const processInputData = async (
   const param9 = new RhinoCompute.Grasshopper.DataTree("Roads");
   param9.append([0], [formData.pRoad / 100]);
   const param10 = new RhinoCompute.Grasshopper.DataTree("Streamline");
-  param10.append([0], [formData.streamLine]);
+  param10.append([0], [formData.streamLine === 1 ? true : false]);
   const param11 = new RhinoCompute.Grasshopper.DataTree("FirstRoad");
-  param11.append([0], [formData.firstRoad]);
+  param11.append([0], [formData.firstRoad === 1 ? true : false]);
   const param12 = new RhinoCompute.Grasshopper.DataTree("SimplifyChoice");
   param12.append([0], [formData.simplifyChoice]);
   const param13 = new RhinoCompute.Grasshopper.DataTree("EdgeCat");
