@@ -23,6 +23,7 @@ interface Result {
   isSuccess: boolean;
   data?: any;
   error?: string;
+  message?: string;
 }
 
 //http for the Parcellation.sh file to pass in evaluateDefinition
@@ -37,11 +38,11 @@ const evaluateDefinition = async (definitionPath: any, trees: any): Promise<Resu
     // console.log("This is response in evaluateDefinition in API --> ", response) 
     console.log("Definition: ", definitionPath)
     console.log("Tree: ", trees)
-    return { isSuccess: true, data: response }
+    return { isSuccess: true, data: response, message: 'success' }
 
   } catch (error: any) {
     console.log("Error from evaluateDefinition in RhinoCompute.ts")
-    return { isSuccess: false, error: error.message };
+    return { isSuccess: false, error: error.message, message: 'error' };
   }
 }
 
@@ -58,7 +59,7 @@ export const processInputData = async (
 
   // Check if inputs exist, if not return error
   if (!formData.selectedArea || !formData.selectedPoint1 || !formData.selectedPoint2) {
-    return { isSuccess: false, error: 'Ensure the polygon and access points are selected' };
+    return { isSuccess: false, error: 'Ensure the polygon and access points are selected', message: 'error' };
   }
 
   // mock inputs
@@ -148,8 +149,8 @@ export const processInputData = async (
 
   const processedData = processDataFromCompute(jsond);
   if (Object.keys(processedData.dataCol).length === 0) {
-    return { isSuccess: false, error: "No data returned from processDataFromCompute" }
+    return { isSuccess: false, error: "No data returned from processDataFromCompute", message: processedData.message }
   }
-  return { isSuccess: true, data: processedData };
+  return { isSuccess: true, data: processedData, message: processedData.message };
 };
 

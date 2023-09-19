@@ -5,6 +5,7 @@ import { Res, DataColItem } from "./types";
 export const processDataFromCompute = (res: Res): {
     dataCol: { [key: number]: DataColItem; };
     averageValues: { [key: string]: number };
+    message: string;
 } => {
     // Initialize variables
     let dataCol: { [key: number]: DataColItem } = {};
@@ -27,8 +28,9 @@ export const processDataFromCompute = (res: Res): {
 
 
     if (!res.values[1]) {
+        const message = "error"
         console.error("No data returned from backend");
-        return { dataCol, averageValues };
+        return { dataCol, averageValues, message };
     }
 
     // console.log("This is JSON,parse -->: ", JSON.parse(res.values[2].InnerTree['{0}'][0].data))
@@ -53,7 +55,9 @@ export const processDataFromCompute = (res: Res): {
     const averageKeys = ['averageParcelArea', 'averageOrientation', 'averageElongation', 'averageCompactness', 'averageConvexity'];
     averageValues = assignAverageValues(res, averageKeys);
 
-    return { dataCol, averageValues };
+    const message = JSON.parse(JSON.parse(res.values[4].InnerTree['{0}'][0].data))
+
+    return { dataCol, averageValues, message };
 }
 // // TODO Anna: add in create polygon function 
 // export const addParcelsToParcelLayer = (dataCol: { [key: number]: DataColItem }) => {
