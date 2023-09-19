@@ -55,7 +55,7 @@ export const processDataFromCompute = (res: Res): {
     const averageKeys = ['averageParcelArea', 'averageOrientation', 'averageElongation', 'averageCompactness', 'averageConvexity'];
     averageValues = assignAverageValues(res, averageKeys);
 
-    const message = res.values[4].InnerTree['{0}'][0].data
+    const message = res.values[4].InnerTree['{0}'][0].data + res.values[4].InnerTree['{0}'][1].data + res.values[4].InnerTree['{0}'][2].data + res.values[4].InnerTree['{0}'][3].data + res.values[4].InnerTree['{0}'][4].data + res.values[4].InnerTree['{0}'][5].data
 
     return { dataCol, averageValues, message };
 }
