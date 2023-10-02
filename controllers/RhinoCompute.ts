@@ -62,13 +62,6 @@ export const processInputData = async (
     return { isSuccess: false, error: 'Ensure the polygon and access points are selected', message: 'error' };
   }
 
-  // mock inputs
-  let mockRoadInput = []
-  let vertices = formData.selectedArea!.rings.toString().split(",")
-  for (let i = 0; i < vertices.length - 1; i++) {
-    mockRoadInput.push(3)
-  }
-
   // weights compile
   let weights = [formData.weightContinuity, formData.weightSideNumber, formData.weightAngleVar, formData.weightLengthVar, formData.weightAccess, formData.weightEvenArea, formData.weightOrientation]
   console.log("This is weights in RhinoCompute.ts: ", weights)
@@ -98,13 +91,11 @@ export const processInputData = async (
   const param12 = new RhinoCompute.Grasshopper.DataTree("SimplifyChoice");
   param12.append([0], [formData.simplifyChoice]);
   const param13 = new RhinoCompute.Grasshopper.DataTree("EdgeCat");
-  param13.append([0], [mockRoadInput.toString()]);
+  param13.append([0], [formData.roadCat]);
   const param14 = new RhinoCompute.Grasshopper.DataTree("Weights");
   param14.append([0], [weights.toString()]);
   const param15 = new RhinoCompute.Grasshopper.DataTree("LengthVSAngle");
   param15.append([0], [formData.lengthVSAngle]);
-  const param16 = new RhinoCompute.Grasshopper.DataTree("EdgeCat");
-  param16.append([0], [formData.roadCat]);
 
   const trees: Array<any>[] = [];
   trees.push(param1);
@@ -122,7 +113,6 @@ export const processInputData = async (
   trees.push(param13);
   trees.push(param14);
   trees.push(param15);
-  trees.push(param16);
 
   const response = await evaluateDefinition(fullURL, trees);
   console.log("This is response.data --> ", response.data)
