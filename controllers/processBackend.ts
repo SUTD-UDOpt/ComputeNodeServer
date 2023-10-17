@@ -36,7 +36,11 @@ export const processDataFromCompute = (res: Res): {
     // console.log("This is JSON,parse -->: ", JSON.parse(res.values[2].InnerTree['{0}'][0].data))
 
     const data = JSON.parse(JSON.parse(res.values[1].InnerTree['{0}'][0].data))
-    const centerlines = JSON.parse(res.values[3].InnerTree['{0;0}'][0].data)
+    const centerlinesList = res.values[3].InnerTree['{0;0}']
+    let centerlines = []
+    centerlinesList.forEach(e => {
+        centerlines.push(JSON.Parse(e.data))
+    })
     console.log(centerlines)
 
     Object.keys(data).forEach((key, i) => {
