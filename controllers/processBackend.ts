@@ -66,7 +66,7 @@ export const processDataFromCompute = (res: Res): {
         message = message + res.values[4].InnerTree['{0}'][i].data
     }
     
-    return { dataCol, averageValues, message, centerlines };
+    return { dataCol, averageValues, centerlines, message };
 }
 // // TODO Anna: add in create polygon function 
 // export const addParcelsToParcelLayer = (dataCol: { [key: number]: DataColItem }) => {
