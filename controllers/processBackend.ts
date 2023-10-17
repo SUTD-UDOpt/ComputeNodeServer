@@ -6,6 +6,7 @@ export const processDataFromCompute = (res: Res): {
     dataCol: { [key: number]: DataColItem; };
     averageValues: { [key: string]: number };
     message: string;
+    centerlines?: string[];
 } => {
     // Initialize variables
     let dataCol: { [key: number]: DataColItem } = {};
