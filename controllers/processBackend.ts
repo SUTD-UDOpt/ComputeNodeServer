@@ -41,7 +41,6 @@ export const processDataFromCompute = (res: Res): {
     centerlinesList.forEach(e => {
         centerlines.push(JSON.parse(e.data))
     })
-    console.log(centerlines)
 
     Object.keys(data).forEach((key, i) => {
         dataCol[i] = {
@@ -66,7 +65,7 @@ export const processDataFromCompute = (res: Res): {
         message = message + res.values[4].InnerTree['{0}'][i].data
     }
     
-    return { dataCol, averageValues, message };
+    return { dataCol, averageValues, message, centerlines };
 }
 // // TODO Anna: add in create polygon function 
 // export const addParcelsToParcelLayer = (dataCol: { [key: number]: DataColItem }) => {
