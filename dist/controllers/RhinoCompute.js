@@ -57,11 +57,11 @@ const evaluateDefinition = (definitionPath, trees) => __awaiter(void 0, void 0, 
         // console.log("This is response in evaluateDefinition in API --> ", response) 
         console.log("Definition: ", definitionPath);
         console.log("Tree: ", trees);
-        return { isSuccess: true, data: response };
+        return { isSuccess: true, data: response, message: 'success' };
     }
     catch (error) {
         console.log("Error from evaluateDefinition in RhinoCompute.ts");
-        return { isSuccess: false, error: error.message };
+        return { isSuccess: false, error: error.message, message: 'error' };
     }
 });
 const processInputData = (formData) => __awaiter(void 0, void 0, void 0, function* () {
@@ -70,13 +70,7 @@ const processInputData = (formData) => __awaiter(void 0, void 0, void 0, functio
     logFile.write(util_1.default.inspect(formData, { showHidden: false, depth: null }));
     // Check if inputs exist, if not return error
     if (!formData.selectedArea || !formData.selectedPoint1 || !formData.selectedPoint2) {
-        return { isSuccess: false, error: 'Ensure the polygon and access points are selected' };
-    }
-    // mock inputs
-    let mockRoadInput = [];
-    let vertices = formData.selectedArea.rings.toString().split(",");
-    for (let i = 0; i < vertices.length - 1; i++) {
-        mockRoadInput.push(3);
+        return { isSuccess: false, error: 'Ensure the polygon and access points are selected', message: 'error' };
     }
     // weights compile
     let weights = [formData.weightContinuity, formData.weightSideNumber, formData.weightAngleVar, formData.weightLengthVar, formData.weightAccess, formData.weightEvenArea, formData.weightOrientation];
@@ -95,14 +89,22 @@ const processInputData = (formData) => __awaiter(void 0, void 0, void 0, functio
     param6.append([0], [formData.minArea]);
     const param7 = new compute_rhino3d_1.default.Grasshopper.DataTree("Orientation");
     param7.append([0], [formData.orientation]);
-    const param8 = new compute_rhino3d_1.default.Grasshopper.DataTree("Roads");
-    param8.append([0], [formData.pRoad / 100]);
-    const param9 = new compute_rhino3d_1.default.Grasshopper.DataTree("EdgeCat");
-    param9.append([0], [mockRoadInput.toString()]);
-    const param10 = new compute_rhino3d_1.default.Grasshopper.DataTree("Weights");
-    param10.append([0], [weights.toString()]);
-    const param11 = new compute_rhino3d_1.default.Grasshopper.DataTree("LengthVSAngle");
-    param11.append([0], [formData.lengthVSAngle]);
+    const param8 = new compute_rhino3d_1.default.Grasshopper.DataTree("MinElongation");
+    param8.append([0], [formData.minElongation]);
+    const param9 = new compute_rhino3d_1.default.Grasshopper.DataTree("Roads");
+    param9.append([0], [formData.pRoad / 100]);
+    const param10 = new compute_rhino3d_1.default.Grasshopper.DataTree("Streamline");
+    param10.append([0], [formData.streamLine === 1 ? true : false]);
+    const param11 = new compute_rhino3d_1.default.Grasshopper.DataTree("FirstRoad");
+    param11.append([0], [formData.firstRoad === 1 ? true : false]);
+    const param12 = new compute_rhino3d_1.default.Grasshopper.DataTree("SimplifyChoice");
+    param12.append([0], [formData.simplifyChoice]);
+    const param13 = new compute_rhino3d_1.default.Grasshopper.DataTree("EdgeCat");
+    param13.append([0], [formData.roadCat]);
+    const param14 = new compute_rhino3d_1.default.Grasshopper.DataTree("Weights");
+    param14.append([0], [weights.toString()]);
+    const param15 = new compute_rhino3d_1.default.Grasshopper.DataTree("LengthVSAngle");
+    param15.append([0], [formData.lengthVSAngle]);
     const trees = [];
     trees.push(param1);
     trees.push(param2);
@@ -115,6 +117,10 @@ const processInputData = (formData) => __awaiter(void 0, void 0, void 0, functio
     trees.push(param9);
     trees.push(param10);
     trees.push(param11);
+    trees.push(param12);
+    trees.push(param13);
+    trees.push(param14);
+    trees.push(param15);
     const response = yield evaluateDefinition(fullURL, trees);
     console.log("This is response.data --> ", response.data);
     if (!response.isSuccess) {
@@ -135,8 +141,8 @@ const processInputData = (formData) => __awaiter(void 0, void 0, void 0, functio
     console.log("This is the jsond.values[2].InnerTree['{2}']s", jsond.values[2].InnerTree['{2}']);
     const processedData = (0, processBackend_1.processDataFromCompute)(jsond);
     if (Object.keys(processedData.dataCol).length === 0) {
-        return { isSuccess: false, error: "No data returned from processDataFromCompute" };
+        return { isSuccess: false, error: "No data returned from processDataFromCompute", message: processedData.message };
     }
-    return { isSuccess: true, data: processedData };
+    return { isSuccess: true, data: processedData, message: processedData.message };
 });
 exports.processInputData = processInputData;

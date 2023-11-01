@@ -10,20 +10,26 @@ const processDataFromCompute = (res) => {
     const assignAverageValues = (res, keys) => {
         const averages = {};
         keys.forEach((key, index) => {
-            averages[key] = truncate(JSON.parse(res.values[2].InnerTree['{2}'][index].data));
+            averages[key] = truncate(JSON.parse(res.values[1].InnerTree['{2}'][index].data));
         });
         return averages;
     };
     // console.log("This is res.value in processBackend parsed to JSON ", res.values)
     // console.log("This is res.values[2].InnerTree[0] in processBackend: ", res.values[2].InnerTree['{0}'])
     // console.log("This is res.values[2].InnerTree[1] in processBackend: ", res.values[2].InnerTree['{1}'])
-    console.log("This is res.values[2].InnerTree[2] in processBackend: ", res.values[2].InnerTree['{2}']);
-    if (!res.values[2]) {
+    console.log("This is res.values[2].InnerTree[2] in processBackend: ", res.values[1].InnerTree['{2}']);
+    if (!res.values[1]) {
+        const message = "error";
         console.error("No data returned from backend");
-        return { dataCol, averageValues };
+        return { dataCol, averageValues, message };
     }
     // console.log("This is JSON,parse -->: ", JSON.parse(res.values[2].InnerTree['{0}'][0].data))
-    const data = JSON.parse(JSON.parse(res.values[2].InnerTree['{0}'][0].data));
+    const data = JSON.parse(JSON.parse(res.values[1].InnerTree['{0}'][0].data));
+    const centerlinesList = res.values[3].InnerTree['{0;0}'];
+    let centerlines = [];
+    centerlinesList.forEach(e => {
+        centerlines.push(JSON.parse(e.data));
+    });
     Object.keys(data).forEach((key, i) => {
         dataCol[i] = {
             "id": i,
@@ -40,7 +46,11 @@ const processDataFromCompute = (res) => {
     });
     const averageKeys = ['averageParcelArea', 'averageOrientation', 'averageElongation', 'averageCompactness', 'averageConvexity'];
     averageValues = assignAverageValues(res, averageKeys);
-    return { dataCol, averageValues };
+    let message = "";
+    for (let i = 0; i < 6; i++) {
+        message = message + res.values[4].InnerTree['{0}'][i].data;
+    }
+    return { dataCol, averageValues, centerlines, message };
 };
 exports.processDataFromCompute = processDataFromCompute;
 // // TODO Anna: add in create polygon function 

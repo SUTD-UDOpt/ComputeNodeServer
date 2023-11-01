@@ -1,37 +1,42 @@
 {
-  minArea: 10000,
+  minArea: 20000,
   orientation: 0,
+  minElongation: 3,
   pRoad: 10,
-  lengthVSAngle: 0.6,
-  weightContinuity: 0.5,
-  weightSideNumber: 8.8,
-  weightAngleVar: 5.3,
-  weightLengthVar: 10,
-  weightAccess: 0,
-  weightEvenArea: 4.3,
-  weightOrientation: 0,
+  streamLine: 0,
+  firstRoad: 0,
+  simplifyChoice: 0,
+  lengthVSAngle: 0.9,
+  weightContinuity: 1,
+  weightSideNumber: 2,
+  weightAngleVar: 3,
+  weightLengthVar: 8,
+  weightAccess: 2,
+  weightEvenArea: 6,
+  weightOrientation: 2,
   selectedArea: {
     spatialReference: { latestWkid: 3857, wkid: 102100 },
     rings: [
       [
-        [ 11559608.361267507, 142712.42240644936 ],
-        [ 11559712.9108874, 142849.25072316304 ],
-        [ 11559972.48755225, 142710.93525676284 ],
-        [ 11559923.67457401, 142630.06351868375 ],
-        [ 11559848.41884396, 142557.515513393 ],
-        [ 11559723.414419318, 142491.98370902965 ],
-        [ 11559608.361267507, 142712.42240644936 ]
+        [ 11559350.90149799, 141639.4865760814 ],
+        [ 11559663.017835494, 141657.1568300157 ],
+        [ 11559977.689985197, 141663.5291916926 ],
+        [ 11560201.919514747, 141631.2589599059 ],
+        [ 11559569.117369937, 140994.8355019283 ],
+        [ 11559359.76877296, 141178.99822060406 ],
+        [ 11559350.90149799, 141639.4865760814 ]
       ]
     ]
   },
   selectedPoint1: {
     spatialReference: { latestWkid: 3857, wkid: 102100 },
-    x: 11559647.415032346,
-    y: 142791.95083793378
+    x: 11559334.799988374,
+    y: 141497.3887375305
   },
   selectedPoint2: {
     spatialReference: { latestWkid: 3857, wkid: 102100 },
-    x: 11559902.763593132,
-    y: 142591.0037354918
-  }
+    x: 11559902.082259942,
+    y: 141269.49393000256
+  },
+  roadCat: '1,1,6,6,6,6'
 }
