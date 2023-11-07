@@ -9,6 +9,7 @@ export interface FormData {
     firstRoad: number,
     simplifyChoice: number,
     lengthVSAngle: number,
+    firstLineType: number | null;
     weightContinuity: number,
     weightSideNumber: number,
     weightAngleVar: number,
