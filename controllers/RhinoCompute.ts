@@ -96,7 +96,7 @@ export const processInputData = async (
   param14.append([0], [weights.toString()]);
   const param15 = new RhinoCompute.Grasshopper.DataTree("LengthVSAngle");
   param15.append([0], [formData.lengthVSAngle]);
-  const param16 = new RhinoCompute.Grasshopper.DataTree("firstLineType");
+  const param16 = new RhinoCompute.Grasshopper.DataTree("FirstLineType");
   formData.firstLineType ? param16.append([0], [formData.firstLineType]) : param16.append([0], [0]);
 
   const trees: Array<any>[] = [];
