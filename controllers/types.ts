@@ -9,9 +9,9 @@ export interface FormData {
     firstRoad: number,
     simplifyChoice: number,
     lengthVSAngle: number,
-    firstLineType: number,
-    allInitialEdgesAreRoad: number,
-    iPathOnly: number,
+    firstLineType: number | null,
+    allInitialEdgesAreRoad: number | null,
+    iPathOnly: number | null,
     weightContinuity: number,
     weightSideNumber: number,
     weightAngleVar: number,
@@ -19,15 +19,15 @@ export interface FormData {
     weightAccess: number,
     weightEvenArea: number,
     weightOrientation: number,
-    vAnchorStrength: number,
-    vOnCrvStrength: number,
-    pAnchorStrength: number,
-    roadSmoothStrength: number,
-    roadJunctionAngleStrength: number,
-    parcelSideSmoothStrength: number,
-    parcelSideAngleStrength: number,
-    parcelSideLengthStrength: number,
-    parcelAdjacencyStrength: number
+    vAnchorStrength: number | null,
+    vOnCrvStrength: number | null,
+    pAnchorStrength: number | null,
+    roadSmoothStrength: number | null,
+    roadJunctionAngleStrength: number | null,
+    parcelSideSmoothStrength: number | null,
+    parcelSideAngleStrength: number | null,
+    parcelSideLengthStrength: number | null,
+    parcelAdjacencyStrength: number | null
 }
 
 export interface ProcessInputDataParams extends FormData {
