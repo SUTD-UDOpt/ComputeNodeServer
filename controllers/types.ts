@@ -9,14 +9,25 @@ export interface FormData {
     firstRoad: number,
     simplifyChoice: number,
     lengthVSAngle: number,
-    firstLineType: number | null;
+    firstLineType: number,
+    allInitialEdgesAreRoad: number,
+    iPathOnly: number,
     weightContinuity: number,
     weightSideNumber: number,
     weightAngleVar: number,
     weightLengthVar: number,
     weightAccess: number,
     weightEvenArea: number,
-    weightOrientation: number
+    weightOrientation: number,
+    vAnchorStrength: number,
+    vOnCrvStrength: number,
+    pAnchorStrength: number,
+    roadSmoothStrength: number,
+    roadJunctionAngleStrength: number,
+    parcelSideSmoothStrength: number,
+    parcelSideAngleStrength: number,
+    parcelSideLengthStrength: number,
+    parcelAdjacencyStrength: number
 }
 
 export interface ProcessInputDataParams extends FormData {
