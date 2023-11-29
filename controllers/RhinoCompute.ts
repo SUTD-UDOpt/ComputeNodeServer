@@ -103,23 +103,23 @@ export const processInputData = async (
   const param18 = new RhinoCompute.Grasshopper.DataTree("FirstLineType");
   formData.firstLineType ? param18.append([0], [formData.firstLineType]) : param18.append([0], [0]);
   const param19 = new RhinoCompute.Grasshopper.DataTree("vAnchorStrength");
-  formData.vAnchorStrength ? param19.append([0], [formData.vAnchorStrength === 0 ? 0 : Math.pow(10, formData.vAnchorStrength)]) : param19.append([0], [0]);
+  formData.vAnchorStrength ? param19.append([0], [formData.vAnchorStrength === 0 ? 0 : Math.pow(10, formData.vAnchorStrength)]) : param19.append([0], [10]);
   const param20 = new RhinoCompute.Grasshopper.DataTree("vOnCrvStrength");
   formData.vOnCrvStrength ? param20.append([0], [formData.vOnCrvStrength === 0 ? 0 : Math.pow(10, formData.vOnCrvStrength)]) : param20.append([0], [0]);
   const param21 = new RhinoCompute.Grasshopper.DataTree("pAnchorStrength");
-  formData.pAnchorStrength ? param21.append([0], [formData.pAnchorStrength === 0 ? 0 : Math.pow(10, formData.pAnchorStrength)]) : param21.append([0], [0]);
+  formData.pAnchorStrength ? param21.append([0], [formData.pAnchorStrength === 0 ? 0 : Math.pow(10, formData.pAnchorStrength)]) : param21.append([0], [10]);
   const param22 = new RhinoCompute.Grasshopper.DataTree("roadSmoothStrength");
-  formData.roadSmoothStrength ? param22.append([0], [formData.roadSmoothStrength === 0 ? 0 : Math.pow(10, formData.roadSmoothStrength)]) : param22.append([0], [0]);
+  formData.roadSmoothStrength ? param22.append([0], [formData.roadSmoothStrength === 0 ? 0 : Math.pow(10, formData.roadSmoothStrength)]) : param22.append([0], [1000]);
   const param23 = new RhinoCompute.Grasshopper.DataTree("roadJunctionAngleStrength");
   formData.roadJunctionAngleStrength ? param23.append([0], [formData.roadJunctionAngleStrength === 0 ? 0 : Math.pow(10, formData.roadJunctionAngleStrength)]) : param23.append([0], [0]);
   const param24 = new RhinoCompute.Grasshopper.DataTree("parcelSideSmoothStrength");
-  formData.parcelSideSmoothStrength ? param24.append([0], [formData.parcelSideSmoothStrength === 0 ? 0 : Math.pow(10, formData.parcelSideSmoothStrength)]) : param24.append([0], [0]);
+  formData.parcelSideSmoothStrength ? param24.append([0], [formData.parcelSideSmoothStrength === 0 ? 0 : Math.pow(10, formData.parcelSideSmoothStrength)]) : param24.append([0], [1000]);
   const param25 = new RhinoCompute.Grasshopper.DataTree("parcelSideAngleStrength");
   formData.parcelSideAngleStrength ? param25.append([0], [formData.parcelSideAngleStrength === 0 ? 0 : Math.pow(10, formData.parcelSideAngleStrength)]) : param25.append([0], [0]);
   const param26 = new RhinoCompute.Grasshopper.DataTree("parcelSideLengthStrength");
   formData.parcelSideLengthStrength ? param26.append([0], [formData.parcelSideLengthStrength === 0 ? 0 : Math.pow(10, formData.parcelSideLengthStrength)]) : param26.append([0], [0]);
   const param27 = new RhinoCompute.Grasshopper.DataTree("parcelAdjacencyStrength");
-  formData.parcelAdjacencyStrength ? param27.append([0], [formData.parcelAdjacencyStrength === 0 ? 0 : Math.pow(10, formData.parcelAdjacencyStrength)]) : param27.append([0], [0]);
+  formData.parcelAdjacencyStrength ? param27.append([0], [formData.parcelAdjacencyStrength === 0 ? 0 : Math.pow(10, formData.parcelAdjacencyStrength)]) : param27.append([0], [100]);
 
   const trees: Array<any>[] = [];
   trees.push(param1);
