@@ -47,7 +47,6 @@ const evaluateDefinition = async (definitionPath: any, trees: any): Promise<Resu
 }
 
 
-
 export const processInputData = async (
   formData: ProcessInputDataParams
 ): Promise<Result> => {
@@ -66,89 +65,44 @@ export const processInputData = async (
   let weights = [formData.weightContinuity, formData.weightSideNumber, formData.weightAngleVar, formData.weightLengthVar, formData.weightAccess, formData.weightEvenArea, formData.weightOrientation]
   console.log("This is weights in RhinoCompute.ts: ", weights)
 
-  const param1 = new RhinoCompute.Grasshopper.DataTree("Coords");
-  param1.append([0], [formData.selectedArea!.rings.toString()]);
-  const param2 = new RhinoCompute.Grasshopper.DataTree("PointAX");
-  param2.append([0], [formData.selectedPoint1!.x]);
-  const param3 = new RhinoCompute.Grasshopper.DataTree("PointAY");
-  param3.append([0], [formData.selectedPoint1!.y]);
-  const param4 = new RhinoCompute.Grasshopper.DataTree("PointBX");
-  param4.append([0], [formData.selectedPoint2!.x]);
-  const param5 = new RhinoCompute.Grasshopper.DataTree("PointBY");
-  param5.append([0], [formData.selectedPoint2!.y]);
-  const param6 = new RhinoCompute.Grasshopper.DataTree("MinArea");
-  param6.append([0], [formData.minArea]);
-  const param7 = new RhinoCompute.Grasshopper.DataTree("Orientation");
-  param7.append([0], [formData.orientation]);
-  const param8 = new RhinoCompute.Grasshopper.DataTree("MinElongation");
-  param8.append([0], [formData.minElongation]);
-  const param9 = new RhinoCompute.Grasshopper.DataTree("Roads");
-  param9.append([0], [formData.pRoad / 100]);
-  const param10 = new RhinoCompute.Grasshopper.DataTree("Streamline");
-  param10.append([0], [formData.streamLine === 1 ? true : false]);
-  const param11 = new RhinoCompute.Grasshopper.DataTree("FirstRoad");
-  param11.append([0], [formData.firstRoad === 1 ? true : false]);
-  const param12 = new RhinoCompute.Grasshopper.DataTree("SimplifyChoice");
-  param12.append([0], [formData.simplifyChoice]);
-  const param13 = new RhinoCompute.Grasshopper.DataTree("allIntialEdgesAreRoad");
-  formData.allInitialEdgesAreRoad ? param13.append([0], [formData.allInitialEdgesAreRoad === 1 ? true : false]) : param13.append([0], [false]);
-  const param14 = new RhinoCompute.Grasshopper.DataTree("IPathOnly");
-  formData.iPathOnly ? param14.append([0], [formData.iPathOnly === 1 ? true : false]) : param14.append([0], [true]);
-  const param15 = new RhinoCompute.Grasshopper.DataTree("EdgeCat");
-  param15.append([0], [formData.roadCat]);
-  const param16 = new RhinoCompute.Grasshopper.DataTree("Weights");
-  param16.append([0], [weights.toString()]);
-  const param17 = new RhinoCompute.Grasshopper.DataTree("LengthVSAngle");
-  param17.append([0], [formData.lengthVSAngle]);
-  const param18 = new RhinoCompute.Grasshopper.DataTree("FirstLineType");
-  formData.firstLineType ? param18.append([0], [formData.firstLineType]) : param18.append([0], [0]);
-  const param19 = new RhinoCompute.Grasshopper.DataTree("vAnchorStrength");
-  formData.vAnchorStrength ? param19.append([0], [formData.vAnchorStrength === 0 ? 0 : Math.pow(10, formData.vAnchorStrength)]) : param19.append([0], [10]);
-  const param20 = new RhinoCompute.Grasshopper.DataTree("vOnCrvStrength");
-  formData.vOnCrvStrength ? param20.append([0], [formData.vOnCrvStrength === 0 ? 0 : Math.pow(10, formData.vOnCrvStrength)]) : param20.append([0], [0]);
-  const param21 = new RhinoCompute.Grasshopper.DataTree("pAnchorStrength");
-  formData.pAnchorStrength ? param21.append([0], [formData.pAnchorStrength === 0 ? 0 : Math.pow(10, formData.pAnchorStrength)]) : param21.append([0], [10]);
-  const param22 = new RhinoCompute.Grasshopper.DataTree("roadSmoothStrength");
-  formData.roadSmoothStrength ? param22.append([0], [formData.roadSmoothStrength === 0 ? 0 : Math.pow(10, formData.roadSmoothStrength)]) : param22.append([0], [1000]);
-  const param23 = new RhinoCompute.Grasshopper.DataTree("roadJunctionAngleStrength");
-  formData.roadJunctionAngleStrength ? param23.append([0], [formData.roadJunctionAngleStrength === 0 ? 0 : Math.pow(10, formData.roadJunctionAngleStrength)]) : param23.append([0], [0]);
-  const param24 = new RhinoCompute.Grasshopper.DataTree("parcelSideSmoothStrength");
-  formData.parcelSideSmoothStrength ? param24.append([0], [formData.parcelSideSmoothStrength === 0 ? 0 : Math.pow(10, formData.parcelSideSmoothStrength)]) : param24.append([0], [1000]);
-  const param25 = new RhinoCompute.Grasshopper.DataTree("parcelSideAngleStrength");
-  formData.parcelSideAngleStrength ? param25.append([0], [formData.parcelSideAngleStrength === 0 ? 0 : Math.pow(10, formData.parcelSideAngleStrength)]) : param25.append([0], [0]);
-  const param26 = new RhinoCompute.Grasshopper.DataTree("parcelSideLengthStrength");
-  formData.parcelSideLengthStrength ? param26.append([0], [formData.parcelSideLengthStrength === 0 ? 0 : Math.pow(10, formData.parcelSideLengthStrength)]) : param26.append([0], [0]);
-  const param27 = new RhinoCompute.Grasshopper.DataTree("parcelAdjacencyStrength");
-  formData.parcelAdjacencyStrength ? param27.append([0], [formData.parcelAdjacencyStrength === 0 ? 0 : Math.pow(10, formData.parcelAdjacencyStrength)]) : param27.append([0], [100]);
-
   const trees: Array<any>[] = [];
-  trees.push(param1);
-  trees.push(param2);
-  trees.push(param3);
-  trees.push(param4);
-  trees.push(param5);
-  trees.push(param6);
-  trees.push(param7);
-  trees.push(param8);
-  trees.push(param9);
-  trees.push(param10);
-  trees.push(param11);
-  trees.push(param12);
-  trees.push(param13);
-  trees.push(param14);
-  trees.push(param15);
-  trees.push(param16);
-  trees.push(param17);
-  trees.push(param18);
-  trees.push(param19);
-  trees.push(param20);
-  trees.push(param21);
-  trees.push(param22);
-  trees.push(param23);
-  trees.push(param24);
-  trees.push(param25);
-  trees.push(param26);
-  trees.push(param27);
+
+  function includeInTree(tree: any, item: any, paramName: string){
+    const param = new RhinoCompute.Grasshopper.DataTree(paramName);
+    param.append([0], [item]);
+    tree.push(param);
+  }
+
+  includeInTree(trees, formData.selectedArea!.rings.toString(), "Coords")
+  includeInTree(trees, formData.selectedPoint1!.x, "PointAX")
+  includeInTree(trees, formData.selectedPoint1!.y, "PointAY")
+  includeInTree(trees, formData.selectedPoint2!.x, "PointBX")
+  includeInTree(trees, formData.selectedPoint2!.y, "PointBY")
+
+  if (formData.minArea){ includeInTree(trees, formData.minArea, "minArea") }
+  if (formData.orientation){ includeInTree(trees, formData.orientation, "Orientation") }
+  if (formData.minElongation){ includeInTree(trees, formData.minElongation, "MinElongation") }
+  if (formData.pRoad){ includeInTree(trees, formData.pRoad / 100, "Roads") }
+  if (formData.streamLine){ includeInTree(trees, formData.streamLine === 1 ? true : false, "Streamline") }
+  if (formData.firstRoad){ includeInTree(trees, formData.firstRoad === 1 ? true : false, "FirstRoad") }
+  if (formData.simplifyChoice){ includeInTree(trees, formData.simplifyChoice, "SimplifyChoice") }
+  if (formData.allInitialEdgesAreRoad){ includeInTree(trees, formData.allInitialEdgesAreRoad === 1 ? true : false, "allIntialEdgesAreRoad") }
+  if (formData.iPathOnly){ includeInTree(trees, formData.iPathOnly === 1 ? true : false, "IPathOnly") }
+  if (formData.roadCat){ includeInTree(trees, formData.roadCat, "EdgeCat") }
+
+  // TODO: Deal with the weights above
+  if (weights){ includeInTree(trees, weights.toString(), "Weights") }
+  if (formData.lengthVSAngle){ includeInTree(trees, formData.lengthVSAngle, "LengthVSAngle") }
+  if (formData.firstLineType){ includeInTree(trees, formData.firstLineType, "FirstLineType") }
+  if (formData.vAnchorStrength){ includeInTree(trees, formData.vAnchorStrength === 0 ? 0 : Math.pow(10, formData.vAnchorStrength), "vAnchorStrength") }
+  if (formData.vOnCrvStrength){ includeInTree(trees, formData.vOnCrvStrength === 0 ? 0 : Math.pow(10, formData.vOnCrvStrength), "vOnCrvStrength") }
+  if (formData.pAnchorStrength){ includeInTree(trees, formData.pAnchorStrength === 0 ? 0 : Math.pow(10, formData.pAnchorStrength), "pAnchorStrength") }
+  if (formData.roadSmoothStrength){ includeInTree(trees, formData.roadSmoothStrength === 0 ? 0 : Math.pow(10, formData.roadSmoothStrength), "roadSmoothStrength") }
+  if (formData.roadJunctionAngleStrength){ includeInTree(trees, formData.roadJunctionAngleStrength === 0 ? 0 : Math.pow(10, formData.roadJunctionAngleStrength), "roadJunctionAngleStrength") }
+  if (formData.parcelSideSmoothStrength){ includeInTree(trees, formData.parcelSideSmoothStrength === 0 ? 0 : Math.pow(10, formData.parcelSideSmoothStrength), "parcelSideSmoothStrength") }
+  if (formData.parcelSideAngleStrength){ includeInTree(trees, formData.parcelSideAngleStrength === 0 ? 0 : Math.pow(10, formData.parcelSideAngleStrength), "parcelSideAngleStrength") }
+  if (formData.parcelSideLengthStrength){ includeInTree(trees, formData.parcelSideLengthStrength === 0 ? 0 : Math.pow(10, formData.parcelSideLengthStrength), "parcelSideLengthStrength") }
+  if (formData.parcelAdjacencyStrength){ includeInTree(trees, formData.parcelAdjacencyStrength === 0 ? 0 : Math.pow(10, formData.parcelAdjacencyStrength), "parcelAdjacencyStrength") }
 
   const response = await evaluateDefinition(fullURL, trees);
   console.log("This is response.data --> ", response.data)
@@ -157,7 +111,6 @@ export const processInputData = async (
   if (!response.isSuccess) {
     return response;
   }
-
 
   // const jsond = await response.data.json();
   var jsond;
