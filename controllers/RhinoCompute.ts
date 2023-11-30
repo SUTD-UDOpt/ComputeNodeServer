@@ -61,11 +61,16 @@ export const processInputData = async (
     return { isSuccess: false, error: 'Ensure the polygon and access points are selected', message: 'error' };
   }
 
-  // weights compile
-  let weights = [formData.weightContinuity, formData.weightSideNumber, formData.weightAngleVar, formData.weightLengthVar, formData.weightAccess, formData.weightEvenArea, formData.weightOrientation]
-  console.log("This is weights in RhinoCompute.ts: ", weights)
-
   const trees: Array<any>[] = [];
+  let weights
+
+  // weights compile
+  if (formData.weightContinuity){
+    weights = [formData.weightContinuity, formData.weightSideNumber, formData.weightAngleVar, formData.weightLengthVar, formData.weightAccess, formData.weightEvenArea, formData.weightOrientation]
+    console.log("This is weights in RhinoCompute.ts: ", weights)
+  } else {
+    weights = false
+  }
 
   function includeInTree(tree: any, item: any, paramName: string){
     const param = new RhinoCompute.Grasshopper.DataTree(paramName);
@@ -89,8 +94,6 @@ export const processInputData = async (
   if (formData.allInitialEdgesAreRoad){ includeInTree(trees, formData.allInitialEdgesAreRoad === 1 ? true : false, "allIntialEdgesAreRoad") }
   if (formData.iPathOnly){ includeInTree(trees, formData.iPathOnly === 1 ? true : false, "IPathOnly") }
   if (formData.roadCat){ includeInTree(trees, formData.roadCat, "EdgeCat") }
-
-  // TODO: Deal with the weights above
   if (weights){ includeInTree(trees, weights.toString(), "Weights") }
   if (formData.lengthVSAngle){ includeInTree(trees, formData.lengthVSAngle, "LengthVSAngle") }
   if (formData.firstLineType){ includeInTree(trees, formData.firstLineType, "FirstLineType") }
