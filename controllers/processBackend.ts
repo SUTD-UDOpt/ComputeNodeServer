@@ -12,11 +12,16 @@ export const processDataFromCompute = (res: Res): {
     let dataCol: { [key: number]: DataColItem } = {};
     let averageValues: { [key: string]: number } = {};
 
+    // Categorise returned values
+    const parcelJSON = res.values.find(item => item.ParamName === 'RH_OUT:ParcelGenerationJSON');
+    const centerlineJSON = res.values.find(item => item.ParamName === 'RH_OUT:CenterLines');
+    const messageJSON = res.values.find(item => item.ParamName === 'RH_OUT:Messages');
+
     // Helper function for average values
     const assignAverageValues = (res: any, keys: string[]) => {
         const averages: { [key: string]: number } = {};
         keys.forEach((key, index) => {
-            averages[key] = truncate(JSON.parse(res.values[1].InnerTree['{2}'][index].data));
+            averages[key] = truncate(JSON.parse(parcelJSON!.InnerTree['{2}'][index].data));
         });
         return averages;
     }
@@ -25,7 +30,7 @@ export const processDataFromCompute = (res: Res): {
     // console.log("This is res.value in processBackend parsed to JSON ", res.values)
     // console.log("This is res.values[2].InnerTree[0] in processBackend: ", res.values[2].InnerTree['{0}'])
     // console.log("This is res.values[2].InnerTree[1] in processBackend: ", res.values[2].InnerTree['{1}'])
-    console.log("This is res.values[2].InnerTree[2] in processBackend: ", res.values[1].InnerTree['{2}'])
+    console.log("This is res.values[2].InnerTree[2] in processBackend: ", parcelJSON!.InnerTree['{2}'])
 
 
     if (!res.values[1]) {
@@ -36,8 +41,8 @@ export const processDataFromCompute = (res: Res): {
 
     // console.log("This is JSON,parse -->: ", JSON.parse(res.values[2].InnerTree['{0}'][0].data))
 
-    const data = JSON.parse(JSON.parse(res.values[1].InnerTree['{0}'][0].data))
-    const centerlinesList = res.values[3].InnerTree['{0;0}']
+    const data = JSON.parse(JSON.parse(parcelJSON!.InnerTree['{0}'][0].data))
+    const centerlinesList = centerlineJSON!.InnerTree['{0;0}']
     let centerlines: string[] = []
     centerlinesList.forEach(e => {
         centerlines.push(JSON.parse(e.data))
@@ -63,7 +68,7 @@ export const processDataFromCompute = (res: Res): {
 
     let message = ""
     for (let i=0; i<6; i++){
-        message = message + res.values[4].InnerTree['{0}'][i].data
+        message = message + messageJSON!.InnerTree['{0}'][i].data
     }
     
     return { dataCol, averageValues, centerlines, message };

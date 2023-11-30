@@ -125,9 +125,6 @@ export const processInputData = async (
   }
 
   console.log("This is the json passing to processBackend: ", jsond)
-  console.log("This is the jsond.values[0].InnerTree['{0}']", jsond.values[0].InnerTree['{0}'])
-  console.log("This is the jsond.values[1].InnerTree['{1}']", jsond.values[1].InnerTree['{1}'])
-  console.log("This is the jsond.values[2].InnerTree['{2}']s", jsond.values[2].InnerTree['{2}'])
 
   const processedData = processDataFromCompute(jsond);
   if (Object.keys(processedData.dataCol).length === 0) {
@@ -135,4 +132,3 @@ export const processInputData = async (
   }
   return { isSuccess: true, data: processedData, message: processedData.message };
 };
-
