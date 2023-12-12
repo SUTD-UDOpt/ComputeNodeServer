@@ -7,6 +7,9 @@
   firstRoad: 0,
   simplifyChoice: 0,
   lengthVSAngle: 0.9,
+  firstLineType: 0,
+  allInitialEdgesAreRoad: 0,
+  iPathOnly: 0,
   weightContinuity: 1,
   weightSideNumber: 2,
   weightAngleVar: 3,
@@ -14,29 +17,36 @@
   weightAccess: 2,
   weightEvenArea: 6,
   weightOrientation: 2,
+  vAnchorStrength: 1,
+  vOnCrvStrength: 0,
+  pAnchorStrength: 1,
+  roadSmoothStrength: 3,
+  roadJunctionAngleStrength: 0,
+  parcelSideSmoothStrength: 3,
+  parcelSideAngleStrength: 0,
+  parcelSideLengthStrength: 0,
+  parcelAdjacencyStrength: 2,
   selectedArea: {
     spatialReference: { latestWkid: 3857, wkid: 102100 },
     rings: [
       [
-        [ 11559350.90149799, 141639.4865760814 ],
-        [ 11559663.017835494, 141657.1568300157 ],
-        [ 11559977.689985197, 141663.5291916926 ],
-        [ 11560201.919514747, 141631.2589599059 ],
-        [ 11559569.117369937, 140994.8355019283 ],
-        [ 11559359.76877296, 141178.99822060406 ],
-        [ 11559350.90149799, 141639.4865760814 ]
+        [ 11558927.495061584, 141615.16956806034 ],
+        [ 11559367.206147317, 141636.1798525605 ],
+        [ 11559346.167992495, 141372.57722751587 ],
+        [ 11558944.84421442, 141364.84279643878 ],
+        [ 11558927.495061584, 141615.16956806034 ]
       ]
     ]
   },
   selectedPoint1: {
     spatialReference: { latestWkid: 3857, wkid: 102100 },
-    x: 11559334.799988374,
-    y: 141497.3887375305
+    x: 11559372.090660674,
+    y: 141489.66614702935
   },
   selectedPoint2: {
     spatialReference: { latestWkid: 3857, wkid: 102100 },
-    x: 11559902.082259942,
-    y: 141269.49393000256
+    x: 11558901.595026508,
+    y: 141489.57850618777
   },
-  roadCat: '1,1,6,6,6,6'
+  roadCat: '2,6,6,6'
 }

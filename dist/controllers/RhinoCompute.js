@@ -137,8 +137,8 @@ const processInputData = (formData) => __awaiter(void 0, void 0, void 0, functio
     }
     console.log("This is the json passing to processBackend: ", jsond);
     console.log("This is the jsond.values[0].InnerTree['{0}']", jsond.values[0].InnerTree['{0}']);
-    console.log("This is the jsond.values[1].InnerTree['{1}']", jsond.values[1].InnerTree['{1}']);
-    console.log("This is the jsond.values[2].InnerTree['{2}']s", jsond.values[2].InnerTree['{2}']);
+    console.log("This is the jsond.values[1].InnerTree['{0}']", jsond.values[1].InnerTree['{0;0}']);
+    console.log("This is the jsond.values[2].InnerTree['{0}']s", jsond.values[2].InnerTree['{0}']);
     const processedData = (0, processBackend_1.processDataFromCompute)(jsond);
     if (Object.keys(processedData.dataCol).length === 0) {
         return { isSuccess: false, error: "No data returned from processDataFromCompute", message: processedData.message };
