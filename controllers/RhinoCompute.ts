@@ -106,10 +106,10 @@ export const processInputData = async (
   if (formData.parcelSideAngleStrength){ includeInTree(trees, formData.parcelSideAngleStrength === 0 ? 0 : Math.pow(10, formData.parcelSideAngleStrength), "parcelSideAngleStrength") }
   if (formData.parcelSideLengthStrength){ includeInTree(trees, formData.parcelSideLengthStrength === 0 ? 0 : Math.pow(10, formData.parcelSideLengthStrength), "parcelSideLengthStrength") }
   if (formData.parcelAdjacencyStrength){ includeInTree(trees, formData.parcelAdjacencyStrength === 0 ? 0 : Math.pow(10, formData.parcelAdjacencyStrength), "parcelAdjacencyStrength") }
-
+  console.log(trees)
+  
   const response = await evaluateDefinition(fullURL, trees);
   console.log("This is response.data --> ", response.data)
-
 
   if (!response.isSuccess) {
     return response;
