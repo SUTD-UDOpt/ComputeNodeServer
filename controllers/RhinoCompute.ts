@@ -85,7 +85,7 @@ export const processInputData = async (
   includeInTree(trees, formData.selectedPoint2!.x, "PointBX")
   includeInTree(trees, formData.selectedPoint2!.y, "PointBY")
 
-  if (formData.minArea){ includeInTree(trees, formData.minArea, "minArea") }
+  if (formData.minArea){ includeInTree(trees, formData.minArea, "MinArea") }
   if (formData.orientation){ includeInTree(trees, formData.orientation, "Orientation") }
   if (formData.minElongation){ includeInTree(trees, formData.minElongation, "MinElongation") }
   if (formData.pRoad){ includeInTree(trees, formData.pRoad / 100, "Roads") }
