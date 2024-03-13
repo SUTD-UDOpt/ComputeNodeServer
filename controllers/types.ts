@@ -11,6 +11,7 @@ export interface FormData {
     lengthVSAngle: number,
     firstLineType: number | null,
     allInitialEdgesAreRoad: number | null,
+    culDeSacDepth: number | null,
     iPathOnly: number | null,
     weightContinuity: number,
     weightSideNumber: number,

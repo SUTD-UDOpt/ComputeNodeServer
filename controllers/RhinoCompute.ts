@@ -93,6 +93,7 @@ export const processInputData = async (
   if (formData.firstRoad){ includeInTree(trees, formData.firstRoad === 1 ? true : false, "FirstRoad") }
   if (formData.simplifyChoice){ includeInTree(trees, formData.simplifyChoice, "SimplifyChoice") }
   if (formData.allInitialEdgesAreRoad){ includeInTree(trees, formData.allInitialEdgesAreRoad === 1 ? true : false, "allIntialEdgesAreRoad") }
+  if (formData.culDeSacDepth){ includeInTree(trees, formData.culDeSacDepth, "culdesacDepth") }
   if (formData.iPathOnly){ includeInTree(trees, formData.iPathOnly === 1 ? true : false, "IPathOnly") }
   if (formData.roadCat){ includeInTree(trees, formData.roadCat, "EdgeCat") }
   if (weights){ includeInTree(trees, weights.toString(), "Weights") }
