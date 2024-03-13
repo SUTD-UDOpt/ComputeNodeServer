@@ -12,7 +12,7 @@ export interface FormData {
     firstLineType: number | null,
     allInitialEdgesAreRoad: number | null,
     culDeSacDepth: number | null,
-    areaDominated: boolean | null,
+    areaDominated: number | null,
     iPathOnly: number | null,
     weightContinuity: number,
     weightSideNumber: number,
