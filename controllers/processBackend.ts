@@ -17,6 +17,8 @@ export const processDataFromCompute = (res: Res): {
     const centerlineJSON = res.values.find(item => item.ParamName === 'RH_OUT:CenterLines');
     const messageJSON = res.values.find(item => item.ParamName === 'RH_OUT:Messages');
 
+    console.log("This is RH_OUT:ParcelGenerationJSON", parcelJSON)
+
     // Helper function for average values
     const assignAverageValues = (res: any, keys: string[]) => {
         const averages: { [key: string]: number } = {};
@@ -27,10 +29,9 @@ export const processDataFromCompute = (res: Res): {
     }
 
 
-    // console.log("This is res.value in processBackend parsed to JSON ", res.values)
     // console.log("This is res.values[2].InnerTree[0] in processBackend: ", res.values[2].InnerTree['{0}'])
     // console.log("This is res.values[2].InnerTree[1] in processBackend: ", res.values[2].InnerTree['{1}'])
-    console.log("This is res.values[2].InnerTree[2] in processBackend: ", parcelJSON!.InnerTree['{2}'])
+    // console.log("This is res.values[2].InnerTree[2] in processBackend: ", parcelJSON!.InnerTree['{2}'])
 
 
     if (!res.values[1]) {
