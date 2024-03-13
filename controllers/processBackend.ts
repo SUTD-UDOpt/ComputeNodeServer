@@ -66,7 +66,7 @@ export const processDataFromCompute = (res: Res): {
     averageValues = assignAverageValues(res, averageKeys);
 
     let message = ""
-    for (let i=0; i<3; i++){
+    for (let i=0; i<messageJSON!.InnerTree['{0}'].length; i++){
         message = message + messageJSON!.InnerTree['{0}'][i].data
     }
     
