@@ -40,8 +40,6 @@ export const processDataFromCompute = (res: Res): {
         return { dataCol, averageValues, message };
     }
 
-    // console.log("This is JSON,parse -->: ", JSON.parse(res.values[2].InnerTree['{0}'][0].data))
-    console.log("test: " + parcelJSON!.InnerTree['{0}'][0].data)
     const data = JSON.parse(JSON.parse(parcelJSON!.InnerTree['{0}'][0].data))
     const centerlinesList = centerlineJSON!.InnerTree['{0;0}']
     let centerlines: string[] = []
@@ -68,7 +66,7 @@ export const processDataFromCompute = (res: Res): {
     averageValues = assignAverageValues(res, averageKeys);
 
     let message = ""
-    for (let i=0; i<6; i++){
+    for (let i=0; i<3; i++){
         message = message + messageJSON!.InnerTree['{0}'][i].data
     }
     
