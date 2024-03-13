@@ -41,7 +41,7 @@ export const processDataFromCompute = (res: Res): {
     }
 
     // console.log("This is JSON,parse -->: ", JSON.parse(res.values[2].InnerTree['{0}'][0].data))
-    console.log("test: " + parcelJSON!.InnerTree['{0}'])
+    console.log("test: " + parcelJSON!.InnerTree['{0}'][0].data)
     const data = JSON.parse(JSON.parse(parcelJSON!.InnerTree['{0}'][0].data))
     const centerlinesList = centerlineJSON!.InnerTree['{0;0}']
     let centerlines: string[] = []
