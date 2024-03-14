@@ -47,7 +47,7 @@ export const processDataFromCompute = (res: Res): {
     }
     
     const data = JSON.parse(JSON.parse(parcelJSON!.InnerTree['{0}'][0].data))
-    const centerlinesDict = JSON.parse(centerlineJSON!.InnerTree['{0;0}'][0].data)
+    const centerlinesDict = JSON.parse(JSON.parse(centerlineJSON!.InnerTree['{0;0}'][0].data))
     console.log("hmmm" + centerlineJSON!.InnerTree['{0;0}'])
     console.log("this is centerlines: " + centerlinesDict)
     
