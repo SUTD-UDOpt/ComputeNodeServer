@@ -73,6 +73,7 @@ export const processDataFromCompute = (res: Res): {
         })
         multipleDataCol[parseInt(item)] = dataCol
     });
+    console.log("This is it: " + multipleDataCol)
 
     const averageKeys = ['averageParcelArea', 'averageOrientation', 'averageElongation', 'averageCompactness', 'averageConvexity'];
     multipleAverageValues = assignAverageValues(res, averageKeys);
