@@ -17,11 +17,11 @@ export const processDataFromCompute = (res: Res): {
     const centerlineJSON = res.values.find(item => item.ParamName === 'RH_OUT:CenterLines');
     const messageJSON = res.values.find(item => item.ParamName === 'RH_OUT:Messages');
 
-    console.log("This is RH_OUT:ParcelGenerationJSON", JSON.parse(parcelJSON!.InnerTree['{2}'][0].data))
+    console.log("This is RH_OUT:ParcelGenerationJSON", JSON.parse(parcelJSON!.InnerTree['{0}'][0].data))
 
     // Helper function for average values
     const assignAverageValues = (res: any, keys: string[]) => {
-        const rawData = JSON.parse(JSON.parse(parcelJSON!.InnerTree['{2}'][0].data))
+        const rawData = JSON.parse(parcelJSON!.InnerTree['{2}'][0].data)
         console.log("RawAVG: " + rawData)
         let result: {[key: number]: {}} = {}
         Object.keys(rawData).forEach((item, j) => {
@@ -55,7 +55,7 @@ export const processDataFromCompute = (res: Res): {
 
     Object.keys(data).forEach((item, j) => {
         let dataCol: { [key: number]: DataColItem } = {};
-        Object.keys(data[j]).forEach((key, i) => {
+        Object.keys(item).forEach((key, i) => {
             dataCol[i] = {
                 "id": i,
                 "program": "none",
