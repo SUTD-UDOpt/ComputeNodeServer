@@ -45,29 +45,30 @@ export const processDataFromCompute = (res: Res): {
         console.error("No data returned from backend");
         return { multipleDataCol, multipleAverageValues, message };
     }
-    console.log("check1")
+    
     const data = JSON.parse(JSON.parse(parcelJSON!.InnerTree['{0}'][0].data))
     const centerlinesList = centerlineJSON!.InnerTree['{0;0}']
-    console.log("check2")
+    
     let centerlines: string[] = []
     centerlinesList.forEach(e => {
         centerlines.push(JSON.parse(e.data))
     })
-    console.log("check3")
+    
     Object.keys(data).forEach((item, j) => {
         let dataCol: { [key: number]: DataColItem } = {};
         Object.keys(item).forEach((key, i) => {
+            console.log("This is it: " + data[item])
             dataCol[i] = {
                 "id": i,
                 "program": "none",
                 "graphic": null,
-                "coords": data[key]["ParcelCoordinates"],
-                "edgecat": data[key]["EdgeCategory"],
-                "area": truncate(data[key]["Area"]),
-                "orientation": truncate(data[key]["Scores"][0]),
-                "elongation": truncate(data[key]["Scores"][1]),
-                "compactness": truncate(data[key]["Scores"][2]),
-                "convexity": truncate(data[key]["Scores"][3])
+                "coords": data[item][key]["ParcelCoordinates"],
+                "edgecat": data[item][key]["EdgeCategory"],
+                "area": truncate(data[item][key]["Area"]),
+                "orientation": truncate(data[item][key]["Scores"][0]),
+                "elongation": truncate(data[item][key]["Scores"][1]),
+                "compactness": truncate(data[item][key]["Scores"][2]),
+                "convexity": truncate(data[item][key]["Scores"][3])
             }
         })
         multipleDataCol[j] = dataCol
