@@ -25,7 +25,6 @@ export const processDataFromCompute = (res: Res): {
         let result: {[key: number]: {}} = {}
         Object.keys(rawData).forEach((item) => {
             const workingAvg = rawData[item]
-            console.log("This is it: " + workingAvg)
             const averages: { [key: string]: number } = {};
             keys.forEach((key, index) => {
                 averages[key] = truncate(workingAvg[index]);
@@ -74,11 +73,9 @@ export const processDataFromCompute = (res: Res): {
         })
         multipleDataCol[parseInt(item)] = dataCol
     });
-    console.log("multiPArcel: " + multipleDataCol)
 
     const averageKeys = ['averageParcelArea', 'averageOrientation', 'averageElongation', 'averageCompactness', 'averageConvexity'];
     multipleAverageValues = assignAverageValues(res, averageKeys);
-    console.log("MultiAVG: " + multipleAverageValues)
 
     let message = ""
     for (let i=0; i<messageJSON!.InnerTree['{0}'].length; i++){
