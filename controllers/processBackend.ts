@@ -25,9 +25,11 @@ export const processDataFromCompute = (res: Res): {
         console.log("RawAVG: " + rawData)
         let result: {[key: number]: {}} = {}
         Object.keys(rawData).forEach((item, j) => {
+            console.log(rawData[item])
+            const workingAvg = JSON.parse(rawData[item])
             const averages: { [key: string]: number } = {};
             keys.forEach((key, index) => {
-                averages[key] = truncate(JSON.parse(item[index]));
+                averages[key] = truncate(JSON.parse(rawData[item][index]));
             });
             result[j] = averages;
         })
@@ -58,7 +60,6 @@ export const processDataFromCompute = (res: Res): {
         let dataCol: { [key: number]: DataColItem } = {};
         Object.keys(item).forEach((key) => {
             const workingData = JSON.parse(data[item])
-            console.log("This is it: " + workingData[key])
             dataCol[parseInt(key)] = {
                 "id": parseInt(key),
                 "program": "none",
