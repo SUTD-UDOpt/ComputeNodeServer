@@ -6,7 +6,7 @@ export const processDataFromCompute = (res: Res): {
     multipleDataCol: MultipleDataColItem;
     multipleAverageValues: MultipleAverageValues;
     message: string;
-    centerlines?: string[];
+    multiCenterlines?: {[key: number]: string[]};
 } => {
     // Initialize variables
     let multipleDataCol: MultipleDataColItem = {};
@@ -47,11 +47,19 @@ export const processDataFromCompute = (res: Res): {
     }
     
     const data = JSON.parse(JSON.parse(parcelJSON!.InnerTree['{0}'][0].data))
-    const centerlinesList = centerlineJSON!.InnerTree['{0;0}']
+    const centerlinesDict = JSON.parse(centerlineJSON!.InnerTree['{0;0}'][0].data)
+    console.log("this is centerlines: " + centerlinesDict)
     
-    let centerlines: string[] = []
-    centerlinesList.forEach(e => {
-        centerlines.push(JSON.parse(e.data))
+    let multiCenterlines: {[key: number]: string[]} = {}
+
+    Object.keys(centerlinesDict).forEach((key) => {
+        const centerlinesList = centerlinesDict[parseInt(key)]
+        console.log("This one list: " + centerlinesList)
+        let centerlines: string[] = []
+        centerlinesList.forEach(e => {
+            centerlines.push(e)
+        })
+        multiCenterlines[parseInt(key)] = centerlines
     })
     
     Object.keys(data).forEach((item) => {
@@ -83,7 +91,7 @@ export const processDataFromCompute = (res: Res): {
         message = message + messageJSON!.InnerTree['{0}'][i].data
     }
     
-    return { multipleDataCol, multipleAverageValues, centerlines, message };
+    return { multipleDataCol, multipleAverageValues, multiCenterlines, message };
 }
 
 // DATA RELATED FUNCTIONS
