@@ -54,12 +54,12 @@ export const processDataFromCompute = (res: Res): {
         centerlines.push(JSON.parse(e.data))
     })
     
-    Object.keys(data).forEach((item, j) => {
+    Object.keys(data).forEach((item) => {
         let dataCol: { [key: number]: DataColItem } = {};
-        Object.keys(item).forEach((key, i) => {
-            console.log("This is it: " + data[item])
-            dataCol[i] = {
-                "id": i,
+        Object.keys(item).forEach((key) => {
+            console.log("This is it: " + data[item][key])
+            dataCol[parseInt(key)] = {
+                "id": parseInt(key),
                 "program": "none",
                 "graphic": null,
                 "coords": data[item][key]["ParcelCoordinates"],
@@ -71,7 +71,7 @@ export const processDataFromCompute = (res: Res): {
                 "convexity": truncate(data[item][key]["Scores"][3])
             }
         })
-        multipleDataCol[j] = dataCol
+        multipleDataCol[parseInt(item)] = dataCol
     });
     console.log("multiPArcel: " + multipleDataCol)
 
