@@ -80,6 +80,18 @@ export interface DataColItem {
     convexity: number;
 }
 
+export interface MultipleDataColItem {
+    [key: number]: {
+        [key: number]: DataColItem;
+    };
+}
+
+export interface MultipleAverageValues {
+    [key: number]: {
+        [key: number]: number;
+    };
+}
+
 export type EnvironmentVariables = {
     GH_FILE: string;
     COMPUTE_API_KEY: string;

@@ -1,16 +1,16 @@
 // import { ParcelOptimizerStoreInstance } from "./ParcelOptimizerStore";
 
-import { Res, DataColItem } from "./types";
+import { Res, DataColItem, MultipleDataColItem, MultipleAverageValues } from "./types";
 
 export const processDataFromCompute = (res: Res): {
-    dataCol: { [key: number]: DataColItem; };
-    averageValues: { [key: string]: number };
+    multipleDataCol: MultipleDataColItem;
+    multipleAverageValues: MultipleAverageValues;
     message: string;
     centerlines?: string[];
 } => {
     // Initialize variables
-    let dataCol: { [key: number]: DataColItem } = {};
-    let averageValues: { [key: string]: number } = {};
+    let multipleDataCol: MultipleDataColItem = {};
+    let multipleAverageValues: MultipleAverageValues = {};
 
     // Categorise returned values
     const parcelJSON = res.values.find(item => item.ParamName === 'RH_OUT:ParcelGenerationJSON');
@@ -21,11 +21,17 @@ export const processDataFromCompute = (res: Res): {
 
     // Helper function for average values
     const assignAverageValues = (res: any, keys: string[]) => {
-        const averages: { [key: string]: number } = {};
-        keys.forEach((key, index) => {
-            averages[key] = truncate(JSON.parse(parcelJSON!.InnerTree['{2}'][index].data));
-        });
-        return averages;
+        const rawData = JSON.parse(parcelJSON!.InnerTree['{2}'][0].data)
+        console.log("RawAVG: " + rawData)
+        let result: {[key: number]: {}} = {}
+        Object.keys(rawData).forEach((item, j) => {
+            const averages: { [key: string]: number } = {};
+            keys.forEach((key, index) => {
+                averages[key] = truncate(JSON.parse(item[index]));
+            });
+            result[j] = averages;
+        })
+        return result
     }
 
 
@@ -37,7 +43,7 @@ export const processDataFromCompute = (res: Res): {
     if (!res.values[1]) {
         const message = "error"
         console.error("No data returned from backend");
-        return { dataCol, averageValues, message };
+        return { multipleDataCol, multipleAverageValues, message };
     }
 
     const data = JSON.parse(JSON.parse(parcelJSON!.InnerTree['{0}'][0].data))
@@ -47,41 +53,38 @@ export const processDataFromCompute = (res: Res): {
         centerlines.push(JSON.parse(e.data))
     })
 
-    Object.keys(data).forEach((key, i) => {
-        dataCol[i] = {
-            "id": i,
-            "program": "none",
-            "graphic": null,
-            "coords": data[key]["ParcelCoordinates"],
-            "edgecat": data[key]["EdgeCategory"],
-            "area": truncate(data[key]["Area"]),
-            "orientation": truncate(data[key]["Scores"][0]),
-            "elongation": truncate(data[key]["Scores"][1]),
-            "compactness": truncate(data[key]["Scores"][2]),
-            "convexity": truncate(data[key]["Scores"][3])
-        }
+    Object.keys(data).forEach((item, j) => {
+        let dataCol: { [key: number]: DataColItem } = {};
+        Object.keys(data[j]).forEach((key, i) => {
+            dataCol[i] = {
+                "id": i,
+                "program": "none",
+                "graphic": null,
+                "coords": data[key]["ParcelCoordinates"],
+                "edgecat": data[key]["EdgeCategory"],
+                "area": truncate(data[key]["Area"]),
+                "orientation": truncate(data[key]["Scores"][0]),
+                "elongation": truncate(data[key]["Scores"][1]),
+                "compactness": truncate(data[key]["Scores"][2]),
+                "convexity": truncate(data[key]["Scores"][3])
+            }
+        })
+        multipleDataCol[j] = dataCol
     });
+    console.log("multiPArcel: " + multipleDataCol)
 
     const averageKeys = ['averageParcelArea', 'averageOrientation', 'averageElongation', 'averageCompactness', 'averageConvexity'];
-    averageValues = assignAverageValues(res, averageKeys);
+    multipleAverageValues = assignAverageValues(res, averageKeys);
+    console.log("MultiAVG: " + multipleAverageValues)
 
     let message = ""
     for (let i=0; i<messageJSON!.InnerTree['{0}'].length; i++){
         message = message + messageJSON!.InnerTree['{0}'][i].data
     }
     
-    return { dataCol, averageValues, centerlines, message };
+    return { multipleDataCol, multipleAverageValues, centerlines, message };
 }
-// // TODO Anna: add in create polygon function 
-// export const addParcelsToParcelLayer = (dataCol: { [key: number]: DataColItem }) => {
-//     const parsedGraphics: __esri.Collection<__esri.Graphic> | __esri.Graphic[] = []
 
-//     // add graphics here with the attributes
-//     // for (let i = 0; i < dataCol.length; i++) {
-
-//     // probably need to import the parcel layer here from MobX store
-//     // ParcelOptimizerStoreInstance.parcelLayer.source.addMany(parsedGraphics)
-// }
 // DATA RELATED FUNCTIONS
 function truncate(num: number) {
     return Math.round(num * 1000) / 1000

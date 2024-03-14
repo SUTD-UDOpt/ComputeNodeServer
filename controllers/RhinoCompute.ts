@@ -129,7 +129,7 @@ export const processInputData = async (
   console.log("This is the json passing to processBackend: ", jsond)
 
   const processedData = processDataFromCompute(jsond);
-  if (Object.keys(processedData.dataCol).length === 0) {
+  if (Object.keys(processedData.multipleDataCol).length === 0) {
     return { isSuccess: false, error: "No data returned from processDataFromCompute", message: processedData.message }
   }
   return { isSuccess: true, data: processedData, message: processedData.message };
