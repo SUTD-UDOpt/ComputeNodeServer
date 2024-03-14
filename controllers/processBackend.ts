@@ -25,6 +25,7 @@ export const processDataFromCompute = (res: Res): {
         let result: {[key: number]: {}} = {}
         Object.keys(rawData).forEach((item) => {
             const workingAvg = JSON.parse(rawData[item])
+            console.log("This is it: " + workingAvg)
             const averages: { [key: string]: number } = {};
             keys.forEach((key, index) => {
                 averages[key] = truncate(workingAvg[index]);
