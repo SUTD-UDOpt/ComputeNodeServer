@@ -57,18 +57,19 @@ export const processDataFromCompute = (res: Res): {
     Object.keys(data).forEach((item) => {
         let dataCol: { [key: number]: DataColItem } = {};
         Object.keys(item).forEach((key) => {
-            console.log("This is it: " + data[item][key])
+            const workingData = JSON.parse(data[item])
+            console.log("This is it: " + workingData[key])
             dataCol[parseInt(key)] = {
                 "id": parseInt(key),
                 "program": "none",
                 "graphic": null,
-                "coords": data[item][key]["ParcelCoordinates"],
-                "edgecat": data[item][key]["EdgeCategory"],
-                "area": truncate(data[item][key]["Area"]),
-                "orientation": truncate(data[item][key]["Scores"][0]),
-                "elongation": truncate(data[item][key]["Scores"][1]),
-                "compactness": truncate(data[item][key]["Scores"][2]),
-                "convexity": truncate(data[item][key]["Scores"][3])
+                "coords": workingData[key]["ParcelCoordinates"],
+                "edgecat": workingData[key]["EdgeCategory"],
+                "area": truncate(workingData[key]["Area"]),
+                "orientation": truncate(workingData[key]["Scores"][0]),
+                "elongation": truncate(workingData[key]["Scores"][1]),
+                "compactness": truncate(workingData[key]["Scores"][2]),
+                "convexity": truncate(workingData[key]["Scores"][3])
             }
         })
         multipleDataCol[parseInt(item)] = dataCol
