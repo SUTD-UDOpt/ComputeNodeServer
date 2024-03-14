@@ -48,14 +48,11 @@ export const processDataFromCompute = (res: Res): {
     
     const data = JSON.parse(JSON.parse(parcelJSON!.InnerTree['{0}'][0].data))
     const centerlinesDict = JSON.parse(JSON.parse(centerlineJSON!.InnerTree['{0;0}'][0].data))
-    console.log("hmmm" + centerlineJSON!.InnerTree['{0;0}'])
-    console.log("this is centerlines: " + centerlinesDict)
     
     let multiCenterlines: {[key: number]: string[]} = {}
 
     Object.keys(centerlinesDict).forEach((key) => {
         const centerlinesList = centerlinesDict[parseInt(key)]
-        console.log("This one list: " + centerlinesList)
         let centerlines: string[] = []
         centerlinesList.forEach((e: string) => {
             centerlines.push(e)
@@ -67,7 +64,6 @@ export const processDataFromCompute = (res: Res): {
         let dataCol: { [key: number]: DataColItem } = {};
         const workingData = JSON.parse(data[item])
         Object.keys(workingData).forEach((key) => {
-            console.log("it is: " + workingData[key])
             dataCol[parseInt(key)] = {
                 "id": parseInt(key),
                 "program": "none",
