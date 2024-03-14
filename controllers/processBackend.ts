@@ -56,7 +56,7 @@ export const processDataFromCompute = (res: Res): {
         const centerlinesList = centerlinesDict[parseInt(key)]
         console.log("This one list: " + centerlinesList)
         let centerlines: string[] = []
-        centerlinesList.forEach(e => {
+        centerlinesList.forEach((e: string) => {
             centerlines.push(e)
         })
         multiCenterlines[parseInt(key)] = centerlines
