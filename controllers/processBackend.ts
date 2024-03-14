@@ -17,7 +17,7 @@ export const processDataFromCompute = (res: Res): {
     const centerlineJSON = res.values.find(item => item.ParamName === 'RH_OUT:CenterLines');
     const messageJSON = res.values.find(item => item.ParamName === 'RH_OUT:Messages');
 
-    console.log("This is RH_OUT:ParcelGenerationJSON", parcelJSON)
+    console.log("This is RH_OUT:ParcelGenerationJSON", parcelJSON!.InnerTree['{2}'])
 
     // Helper function for average values
     const assignAverageValues = (res: any, keys: string[]) => {
