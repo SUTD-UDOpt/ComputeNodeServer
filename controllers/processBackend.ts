@@ -21,11 +21,10 @@ export const processDataFromCompute = (res: Res): {
 
     // Helper function for average values
     const assignAverageValues = (res: any, keys: string[]) => {
-        const rawData = JSON.parse(parcelJSON!.InnerTree['{2}'][0].data)
-        console.log("rawDates " + JSON.parse(rawData))
+        const rawData = JSON.parse(JSON.parse(parcelJSON!.InnerTree['{2}'][0].data))
         let result: {[key: number]: {}} = {}
         Object.keys(rawData).forEach((item) => {
-            const workingAvg = JSON.parse(rawData[item])
+            const workingAvg = rawData[item]
             console.log("This is it: " + workingAvg)
             const averages: { [key: string]: number } = {};
             keys.forEach((key, index) => {
