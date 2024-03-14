@@ -60,6 +60,7 @@ export const processDataFromCompute = (res: Res): {
         console.log("iten: " + item)
         Object.keys(rawData).forEach((key) => {
             const workingData = JSON.parse(rawData)
+            console.log("it is: " + workingData)
             dataCol[parseInt(key)] = {
                 "id": parseInt(key),
                 "program": "none",
